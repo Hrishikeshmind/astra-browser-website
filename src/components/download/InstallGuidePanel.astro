@@ -1,0 +1,408 @@
+---
+import CheckIcon from '~/icons/CheckIcon.astro'
+import XmarkIcon from '~/icons/XmarkIcon.astro'
+---
+
+<div id="install-guide-root" class="install-guide-root" hidden aria-hidden="true">
+  <div id="install-guide-backdrop" class="install-guide-backdrop" aria-hidden="true"></div>
+
+  <div
+    id="install-guide-panel"
+    class="install-guide-panel grid-line grid-line-all"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="install-guide-title"
+    aria-describedby="install-guide-description"
+    tabindex="-1"
+  >
+    <div class="install-guide-header grid-line grid-line-b">
+      <div>
+        <p class="section-label mb-2">Installation guide</p>
+        <h2 id="install-guide-title" class="install-guide-title">Windows may ask before installing</h2>
+      </div>
+      <button
+        type="button"
+        id="install-guide-close"
+        class="install-guide-close btn-editorial"
+        aria-label="Close installation guide"
+      >
+        <XmarkIcon class="size-4" aria-hidden="true" />
+      </button>
+    </div>
+
+    <div class="install-guide-body">
+      <p id="install-guide-description" class="install-guide-lead">
+        Astra is built on the same secure Firefox and Zen foundations you trust. Because we are
+        still growing as a student-led project, we have not yet purchased the expensive Windows
+        code-signing certificate. Windows SmartScreen may show a one-time notice — this is normal
+        and does not mean Astra is unsafe.
+      </p>
+
+      <div class="install-guide-steps">
+        <article class="install-guide-step grid-line grid-line-all">
+          <div class="install-guide-step-head">
+            <span class="install-guide-step-number">01</span>
+            <div>
+              <h3 class="install-guide-step-title">Click “More info”</h3>
+              <p class="install-guide-step-copy">
+                When the purple Windows screen appears, select the underlined
+                <strong>More info</strong> link.
+              </p>
+            </div>
+          </div>
+          <figure class="install-guide-figure">
+            <img
+              src="/images/install-guide/smartscreen-step-1-more-info.png"
+              alt="Windows SmartScreen warning with a More info link highlighted"
+              width="640"
+              height="360"
+              loading="eager"
+              decoding="async"
+            />
+            <figcaption class="tech-meta mt-2 opacity-60">Step 1 · SmartScreen first screen</figcaption>
+          </figure>
+        </article>
+
+        <article class="install-guide-step grid-line grid-line-all">
+          <div class="install-guide-step-head">
+            <span class="install-guide-step-number">02</span>
+            <div>
+              <h3 class="install-guide-step-title">Click “Run anyway”</h3>
+              <p class="install-guide-step-copy">
+                On the next screen, choose <strong>Run anyway</strong> to start the Astra installer.
+              </p>
+            </div>
+          </div>
+          <figure class="install-guide-figure">
+            <img
+              src="/images/install-guide/smartscreen-step-2-run-anyway.png"
+              alt="Windows SmartScreen screen showing the Run anyway button"
+              width="640"
+              height="360"
+              loading="eager"
+              decoding="async"
+            />
+            <figcaption class="tech-meta mt-2 opacity-60">Step 2 · Run anyway to install</figcaption>
+          </figure>
+        </article>
+
+        <article class="install-guide-step install-guide-step-final grid-line grid-line-all">
+          <div class="install-guide-step-head">
+            <span class="install-guide-step-number">03</span>
+            <div>
+              <h3 class="install-guide-step-title">Your installer is installing</h3>
+              <p class="install-guide-step-copy">
+                After you click Run anyway, the Astra installer opens and setup begins automatically.
+              </p>
+            </div>
+          </div>
+          <div class="install-guide-status">
+            <span class="install-guide-status-icon" aria-hidden="true">
+              <CheckIcon class="size-4" />
+            </span>
+            <p class="install-guide-status-text">
+              Your download has started. Follow the two steps above when Windows asks.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="install-guide-footer grid-line grid-line-t">
+      <p class="tech-meta opacity-60">This notice appears only once per download on Windows.</p>
+      <button type="button" id="install-guide-continue" class="btn-editorial btn-editorial-primary">
+        Got it — continue
+      </button>
+    </div>
+  </div>
+</div>
+
+<div
+  id="install-guide-toast"
+  class="install-guide-toast grid-line grid-line-all"
+  role="status"
+  aria-live="polite"
+  hidden
+>
+  <span class="install-guide-toast-icon" aria-hidden="true">
+    <CheckIcon class="size-4" />
+  </span>
+  <div>
+    <p class="install-guide-toast-title">Your installer is installing</p>
+    <p class="install-guide-toast-copy tech-meta opacity-80">
+      Follow the steps when Windows SmartScreen appears.
+    </p>
+  </div>
+  <button
+    type="button"
+    id="install-guide-toast-close"
+    class="install-guide-toast-close"
+    aria-label="Dismiss notification"
+  >
+    <XmarkIcon class="size-3.5" aria-hidden="true" />
+  </button>
+</div>
+
+<style>
+  .install-guide-root {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    pointer-events: none;
+  }
+
+  .install-guide-root:not([hidden]) {
+    pointer-events: auto;
+  }
+
+  .install-guide-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--astra-dark) 55%, transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .install-guide-root.is-open .install-guide-backdrop {
+    opacity: 1;
+  }
+
+  .install-guide-panel {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 52rem);
+    max-height: min(92dvh, 900px);
+    overflow: auto;
+    background: var(--astra-paper);
+    color: var(--astra-dark);
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .install-guide-root.is-open .install-guide-panel {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .install-guide-header,
+  .install-guide-footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .install-guide-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .install-guide-close {
+    flex-shrink: 0;
+    padding: 0.55rem;
+  }
+
+  .install-guide-body {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .install-guide-lead {
+    max-width: 42rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--astra-gray);
+  }
+
+  .install-guide-lead strong {
+    color: var(--astra-dark);
+    font-weight: 600;
+  }
+
+  .install-guide-steps {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .install-guide-step {
+    padding: 1rem;
+    background: var(--astra-subtle);
+  }
+
+  .install-guide-step-head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .install-guide-step-number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+    color: var(--astra-gray);
+  }
+
+  .install-guide-step-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .install-guide-step-copy {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--astra-gray);
+  }
+
+  .install-guide-step-copy strong {
+    color: var(--astra-dark);
+    font-weight: 600;
+  }
+
+  .install-guide-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: var(--grid-line) solid var(--astra-border);
+    background: #5c2d91;
+  }
+
+  .install-guide-step-final {
+    background: color-mix(in srgb, var(--astra-subtle) 70%, var(--astra-paper));
+  }
+
+  .install-guide-status {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border: var(--grid-line) solid var(--astra-border);
+    background: var(--astra-paper);
+  }
+
+  .install-guide-status-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: var(--grid-line) solid var(--astra-border);
+    background: var(--astra-dark);
+    color: var(--astra-paper);
+    flex-shrink: 0;
+  }
+
+  .install-guide-status-text {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--astra-dark);
+  }
+
+  .install-guide-footer {
+    align-items: center;
+  }
+
+  .install-guide-toast {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 101;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: min(calc(100% - 2rem), 22rem);
+    padding: 0.875rem 1rem;
+    background: var(--astra-paper);
+    color: var(--astra-dark);
+    box-shadow: 0 12px 40px color-mix(in srgb, var(--astra-dark) 18%, transparent);
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+    pointer-events: auto;
+  }
+
+  .install-guide-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .install-guide-toast-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: var(--grid-line) solid var(--astra-border);
+    background: var(--astra-dark);
+    color: var(--astra-paper);
+    flex-shrink: 0;
+  }
+
+  .install-guide-toast-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+
+  .install-guide-toast-copy {
+    font-size: 0.6875rem;
+    line-height: 1.45;
+  }
+
+  .install-guide-toast-close {
+    margin-left: auto;
+    padding: 0.25rem;
+    border: 0;
+    background: transparent;
+    color: var(--astra-gray);
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .install-guide-toast-close:hover {
+    color: var(--astra-dark);
+  }
+
+  @media (max-width: 640px) {
+    .install-guide-header,
+    .install-guide-footer,
+    .install-guide-body {
+      padding-inline: 1rem;
+    }
+
+    .install-guide-footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .install-guide-footer .btn-editorial {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .install-guide-backdrop,
+    .install-guide-panel,
+    .install-guide-toast {
+      transition: none;
+    }
+  }
+</style>
