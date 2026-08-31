@@ -48,7 +48,7 @@ const windowsDownloadSpecs = [
   },
 ]
 
-let latestVersion = '1.21.4b'
+let latestVersion = '1.19.9b'
 let windowsDownloads = windowsDownloadSpecs.map(item => ({ ...item, fileSize: null as string | null }))
 
 try {
@@ -125,6 +125,7 @@ try {
                 href={item.link}
                 class="download-button btn-editorial btn-editorial-primary w-full sm:w-auto"
                 download
+                data-site-download-trigger
               >
                 Download
                 <ArrowRightIcon class="size-3" aria-hidden="true" />

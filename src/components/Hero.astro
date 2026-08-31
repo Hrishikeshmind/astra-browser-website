@@ -4,6 +4,7 @@ import { faLinux, faWindows } from '@fortawesome/free-brands-svg-icons'
 import { Image } from 'astro:assets'
 import HalftoneLandscape from '~/components/HalftoneLandscape.astro'
 import astraBrowserUi from '~/assets/screenshots/astra-browser-ui.png'
+import astraBrowserUiDark from '~/assets/screenshots/astra-browser-ui-dark.png'
 import ArrowRightIcon from '~/icons/ArrowRightIcon.astro'
 import { getReleases } from '~/components/download/release-data'
 import { formatReleaseVersion, getLatestRelease } from '~/utils/githubReleases'
@@ -17,7 +18,7 @@ library.add(faWindows, faLinux)
 const windowsIcon = icon({ prefix: 'fab', iconName: 'windows' })
 const linuxIcon = icon({ prefix: 'fab', iconName: 'linux' })
 
-let latestVersion = '1.21.4b'
+let latestVersion = '1.19.9b'
 try {
   const release = await getLatestRelease()
   latestVersion = formatReleaseVersion(release.tag_name)
@@ -72,6 +73,7 @@ const windowsDownloads = [
           href={releases.windows.x86_64.link}
           class="btn-editorial btn-editorial-primary w-full sm:w-auto"
           download
+          data-site-download-trigger
         >
           Download Astra for Windows
           <ArrowRightIcon class="size-3" aria-hidden="true" />
@@ -99,7 +101,12 @@ const windowsDownloads = [
                   {platform.archCaption}
                 </p>
               </div>
-              <a href={platform.link} class="btn-editorial btn-editorial-primary w-full" download>
+              <a
+                href={platform.link}
+                class="btn-editorial btn-editorial-primary w-full"
+                download
+                data-site-download-trigger
+              >
                 Download
                 <ArrowRightIcon class="size-3" aria-hidden="true" />
               </a>
@@ -141,8 +148,15 @@ const windowsDownloads = [
       <div class="relative z-10 w-full max-w-lg lg:max-w-xl">
         <Image
           src={astraBrowserUi}
-          alt="Astra Browser interface"
-          class="grid-line grid-line-all h-auto w-full object-contain"
+          alt="Astra Browser interface in light mode"
+          class="grid-line grid-line-all h-auto w-full object-contain dark:hidden"
+          loading="eager"
+          decoding="async"
+        />
+        <Image
+          src={astraBrowserUiDark}
+          alt="Astra Browser interface in dark mode"
+          class="grid-line grid-line-all hidden h-auto w-full object-contain dark:block"
           loading="eager"
           decoding="async"
         />

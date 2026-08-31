@@ -1,0 +1,96 @@
+<script is:inline data-cfasync="false">
+  const API_PATH = '/api/downloads'
+
+  function formatCount(count) {
+    return `${count.toLocaleString('en-US')} downloads`
+  }
+
+  function updateDisplays(count) {
+    document.querySelectorAll('[data-site-download-count]').forEach(el => {
+      el.textContent = formatCount(count)
+      el.classList.remove('hidden')
+    })
+  }
+
+  async function fetchServerCount() {
+    const res = await fetch(API_PATH)
+    if (!res.ok) return 0
+    const data = await res.json()
+    return typeof data.count === 'number' ? data.count : 0
+  }
+
+  async function incrementServerCount() {
+    const res = await fetch(API_PATH, { method: 'POST' })
+    if (!res.ok) return null
+    const data = await res.json()
+    return typeof data.count === 'number' ? data.count : null
+  }
+
+  async function initDownloadCounter() {
+    try {
+      const count = await fetchServerCount()
+      updateDisplays(count)
+    } catch {
+      updateDisplays(0)
+    }
+  }
+
+  async function trackDownload() {
+    try {
+      const count = await incrementServerCount()
+      if (count != null) {
+        updateDisplays(count)
+      }
+    } catch {
+      // Keep the last known count visible.
+    }
+  }
+
+  function isInstallerDownloadUrl(url) {
+    try {
+      const { pathname } = new URL(url)
+      return pathname.includes('/releases/') && pathname.includes('/download/')
+    } catch {
+      return false
+    }
+  }
+
+  function startDownload(url) {
+    const temp = document.createElement('a')
+    temp.href = url
+    temp.rel = 'noopener'
+    temp.style.display = 'none'
+    document.body.appendChild(temp)
+    temp.click()
+    temp.remove()
+  }
+
+  function bindDownloadTriggers() {
+    document.querySelectorAll('[data-site-download-trigger]').forEach(el => {
+      if (!(el instanceof HTMLAnchorElement)) return
+      if (el.dataset.downloadBound === 'true') return
+      el.dataset.downloadBound = 'true'
+
+      el.addEventListener('click', async event => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const url = el.href
+        if (!url || !isInstallerDownloadUrl(url)) return
+
+        startDownload(url)
+        await trackDownload()
+      })
+    })
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      bindDownloadTriggers()
+      initDownloadCounter()
+    })
+  } else {
+    bindDownloadTriggers()
+    initDownloadCounter()
+  }
+</script>
