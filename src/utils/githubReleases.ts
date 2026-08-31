@@ -62,7 +62,7 @@ export function getAllReleases(): Promise<GitHubRelease[]> {
   return cachedAllReleases
 }
 
-const INSTALLER_ASSET_PATTERN = /\.(exe|AppImage|dmg|tar\.xz)$/i
+const INSTALLER_ASSET_PATTERN = /\.(exe|AppImage|dmg|tar\.xz|zip)$/i
 
 function isInstallerAsset(filename: string): boolean {
   return INSTALLER_ASSET_PATTERN.test(filename)
