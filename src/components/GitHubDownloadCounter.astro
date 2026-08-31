@@ -1,0 +1,64 @@
+<script is:inline data-cfasync="false">
+  const GITHUB_REPO = 'Hrishikeshmind/astradesktop'
+  const REFRESH_MS = 2 * 60 * 1000
+  const INSTALLER_ASSET_PATTERN = /\.(exe|AppImage|dmg|tar\.xz)$/i
+
+  function isInstallerAsset(filename) {
+    return INSTALLER_ASSET_PATTERN.test(filename)
+  }
+
+  function formatCount(count) {
+    return `${count.toLocaleString('en-US')} downloads`
+  }
+
+  async function fetchGitHubDownloadCount() {
+    let page = 1
+    let total = 0
+
+    while (true) {
+      const res = await fetch(
+        `https://api.github.com/repos/${GITHUB_REPO}/releases?per_page=100&page=${page}`,
+        {
+          headers: {
+            Accept: 'application/vnd.github+json',
+            'X-GitHub-Api-Version': '2022-11-28',
+          },
+        }
+      )
+      if (!res.ok) return null
+
+      const releases = await res.json()
+      if (!Array.isArray(releases) || releases.length === 0) break
+
+      for (const release of releases) {
+        for (const asset of release.assets ?? []) {
+          if (isInstallerAsset(asset.name ?? '')) {
+            total += asset.download_count ?? 0
+          }
+        }
+      }
+
+      if (releases.length < 100) break
+      page += 1
+    }
+
+    return total
+  }
+
+  async function updateDownloadCount() {
+    const el = document.getElementById('footer-download-count')
+    if (!el) return
+
+    try {
+      const total = await fetchGitHubDownloadCount()
+      if (total == null) return
+      el.textContent = formatCount(total)
+      el.classList.remove('hidden')
+    } catch {
+      // Keep build-time value when present.
+    }
+  }
+
+  updateDownloadCount()
+  setInterval(updateDownloadCount, REFRESH_MS)
+</script>

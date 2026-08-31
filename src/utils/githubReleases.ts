@@ -62,14 +62,23 @@ export function getAllReleases(): Promise<GitHubRelease[]> {
   return cachedAllReleases
 }
 
-/** Sum download_count across every asset on every release. Cached once per build. */
+const INSTALLER_ASSET_PATTERN = /\.(exe|AppImage|dmg|tar\.xz)$/i
+
+function isInstallerAsset(filename: string): boolean {
+  return INSTALLER_ASSET_PATTERN.test(filename)
+}
+
+/** Sum download_count across installer assets on every release. Cached once per build. */
 export function getTotalDownloadCount(): Promise<number> {
   if (!cachedTotalDownloadCount) {
     cachedTotalDownloadCount = getAllReleases()
       .then(releases =>
         releases.reduce(
           (total, release) =>
-            total + release.assets.reduce((sum, asset) => sum + asset.download_count, 0),
+            total +
+            release.assets
+              .filter(asset => isInstallerAsset(asset.name))
+              .reduce((sum, asset) => sum + asset.download_count, 0),
           0
         )
       )

@@ -17,7 +17,6 @@ import '@fontsource/inter/700.css'
 import '../styles/global.css'
 import Footer from '~/components/Footer.astro'
 import NavBar from '~/components/NavBar.astro'
-import SiteDownloadTracker from '~/components/SiteDownloadTracker.astro'
 import { getLocale } from '~/utils/i18n'
 const locale = getLocale(Astro)
 ---
@@ -84,6 +83,5 @@ const locale = getLocale(Astro)
     <NavBar />
     <slot />
     <Footer />
-    <SiteDownloadTracker />
   </body>
 </html>

@@ -73,7 +73,6 @@ const windowsDownloads = [
           href={releases.windows.x86_64.link}
           class="btn-editorial btn-editorial-primary w-full sm:w-auto"
           download
-          data-site-download-trigger
         >
           Download Astra for Windows
           <ArrowRightIcon class="size-3" aria-hidden="true" />
@@ -101,12 +100,7 @@ const windowsDownloads = [
                   {platform.archCaption}
                 </p>
               </div>
-              <a
-                href={platform.link}
-                class="btn-editorial btn-editorial-primary w-full"
-                download
-                data-site-download-trigger
-              >
+              <a href={platform.link} class="btn-editorial btn-editorial-primary w-full" download>
                 Download
                 <ArrowRightIcon class="size-3" aria-hidden="true" />
               </a>

@@ -1,11 +1,21 @@
 ---
 import GridDivider from '~/components/GridDivider.astro'
+import GitHubDownloadCounter from '~/components/GitHubDownloadCounter.astro'
 import Logo from '~/components/Logo.astro'
 import SocialMediaStrip from '~/components/SocialMediaStrip.astro'
+import { formatDownloadCount, getTotalDownloadCount } from '~/utils/githubReleases'
 import { getLocale, getPath } from '~/utils/i18n'
 
 const locale = getLocale(Astro)
 const getLocalePath = getPath(locale)
+
+let downloadCountLabel: string | null = null
+try {
+  const totalDownloads = await getTotalDownloadCount()
+  downloadCountLabel = formatDownloadCount(totalDownloads)
+} catch {
+  downloadCountLabel = null
+}
 
 const footerColumns = [
   {
@@ -113,8 +123,11 @@ const footerColumns = [
     <!-- Bottom bar -->
     <div class="grid-line grid-line-t flex flex-col items-center justify-between gap-3 px-0 py-5 sm:flex-row lg:px-2">
       <p class="tech-meta opacity-60">© 2026 Astra Browser. All rights reserved.</p>
-      <p id="footer-download-count" class="tech-meta opacity-60" data-site-download-count>
-        0 downloads
+      <p
+        id="footer-download-count"
+        class:list={['tech-meta opacity-60', !downloadCountLabel && 'hidden']}
+      >
+        {downloadCountLabel ?? ''}
       </p>
       <p class="tech-meta flex items-center gap-2">
         Made for India
@@ -123,6 +136,8 @@ const footerColumns = [
     </div>
   </div>
 </footer>
+
+<GitHubDownloadCounter />
 
 <style>
   @media (max-width: 1023px) {
