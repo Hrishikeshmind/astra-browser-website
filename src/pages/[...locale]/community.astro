@@ -1,0 +1,103 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const GITHUB_DISCUSSIONS = 'https://github.com/Hrishikeshmind/astradesktop/discussions'
+const GITHUB_ISSUES = 'https://github.com/Hrishikeshmind/astradesktop/issues'
+const GITHUB_RELEASES = 'https://github.com/Hrishikeshmind/astradesktop/releases'
+const DISCORD = 'https://discord.gg/sGta4TnnB'
+
+const channels = [
+  {
+    name: 'GitHub Discussions',
+    description:
+      'Ask questions, share feedback, and connect with other Astra users. This is the primary place for open conversation about the project.',
+    href: GITHUB_DISCUSSIONS,
+    cta: 'Join the discussion',
+  },
+  {
+    name: 'GitHub Issues',
+    description:
+      'Found a bug or something broken? Report it on GitHub Issues so it can be tracked and fixed.',
+    href: GITHUB_ISSUES,
+    cta: 'Browse issues',
+  },
+  {
+    name: 'Discord',
+    description:
+      'Chat with other Astra users and get help in real time on our Discord server.',
+    href: DISCORD,
+    cta: 'Join Discord',
+  },
+  {
+    name: 'Releases',
+    description:
+      'Download the latest builds, read release notes, and follow what shipped in each version.',
+    href: GITHUB_RELEASES,
+    cta: 'View releases',
+  },
+]
+---
+
+<Layout title={layout.community.title} description={layout.community.description}>
+  <ContentPage
+    label="Community"
+    title="Connect with Astra"
+    description="Astra is built in the open. GitHub, Discord, and release updates are where the community lives — ask questions, share feedback, and help shape what comes next."
+  >
+    <GridDivider />
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <div class="grid gap-6 lg:grid-cols-2">
+          {
+            channels.map(channel => (
+              <article class="grid-line grid-line-all p-6 lg:p-8">
+                <h2 class="mb-4 text-lg font-bold tracking-tight uppercase">{channel.name}</h2>
+                <p class="mb-6 text-sm leading-relaxed text-gray">{channel.description}</p>
+                <a
+                  href={channel.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="footer-link text-sm font-medium"
+                >
+                  {channel.cta} →
+                </a>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <article class="max-w-3xl">
+          <p class="section-label mb-4">Open source</p>
+          <h2 class="mb-6 text-2xl font-bold tracking-tight uppercase lg:text-3xl">
+            Built in public
+          </h2>
+          <p class="text-sm leading-relaxed text-gray">
+            Astra Browser is free and open-source software. You can inspect the code, report issues,
+            suggest features, and contribute on GitHub. The project is maintained by Hrishikesh Gade
+            with help from contributors around the world.
+          </p>
+          <a
+            href="https://github.com/Hrishikeshmind/astradesktop"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link mt-6 inline-block text-sm font-medium"
+          >
+            View on GitHub →
+          </a>
+        </article>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

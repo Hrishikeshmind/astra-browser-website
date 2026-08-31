@@ -1,0 +1,19 @@
+---
+import { Image } from 'astro:assets'
+import logoSrc from '~/assets/logo.png'
+
+interface Props {
+  class?: string
+  alt?: string
+}
+
+const { class: className, alt = 'Astra Browser' } = Astro.props
+---
+
+<Image
+  src={logoSrc}
+  alt={alt}
+  class:list={['object-contain', className]}
+  loading="eager"
+  decoding="async"
+/>

@@ -1,0 +1,73 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const sections = [
+  {
+    title: 'What cookies are',
+    body: 'Cookies are small text files that websites can store in your browser. They may remember login sessions, preferences, or identifiers used for analytics or advertising on that site.',
+  },
+  {
+    title: 'How Astra handles cookies',
+    body: 'Cookies set by websites you visit are stored locally on your device. Astra does not upload your cookies to the Astra team or operate a cookie-sync service. Your browsing storage stays under your control.',
+  },
+  {
+    title: 'Your control',
+    body: 'You can clear cookies for individual sites or all at once, block third-party cookies, and manage site-specific storage through Astra Settings.',
+  },
+  {
+    title: 'This website',
+    body: 'The astra-browser.app website does not set tracking cookies or run analytics scripts. No cookie consent banner is shown because this site does not use non-essential cookies.',
+  },
+  {
+    title: 'Third-party sites',
+    body: "When you browse other websites in Astra, those sites may set their own cookies under their policies. Astra's tracking protection can limit some cross-site tracking, but each site manages its own storage unless you block it.",
+  },
+]
+---
+
+<Layout title={layout.cookiePolicy.title} description={layout.cookiePolicy.description}>
+  <ContentPage
+    label="Legal"
+    title="Cookie Policy"
+    description="How Astra Browser handles cookies and site storage."
+  >
+    <GridDivider />
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <p class="tech-meta mb-12 opacity-60">Last updated: August 2026</p>
+        <div class="max-w-3xl space-y-12">
+          {
+            sections.map((section, i) => (
+              <article>
+                <div class="mb-4 flex items-center gap-4">
+                  <span class="section-number">{String(i + 1).padStart(2, '0')}</span>
+                  <h2 class="text-xl font-bold tracking-tight uppercase lg:text-2xl">
+                    {section.title}
+                  </h2>
+                </div>
+                <p class="text-sm leading-relaxed text-gray">{section.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="text-sm leading-relaxed text-gray">
+          For broader privacy practices, see the{' '}
+          <a href="/privacy-policy" class="footer-link">Privacy Policy</a>.
+        </p>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

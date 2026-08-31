@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+
+interface Props {
+  images: [ImageMetadata, ImageMetadata]
+  alt: string
+  class?: string
+}
+
+const { images, alt, class: className } = Astro.props
+const [primary, secondary] = images
+---
+
+<div class:list={['feature-visual feature-crossfade w-full', className]}>
+  <Image
+    src={primary}
+    alt={alt}
+    class="feature-crossfade__frame feature-crossfade__frame--primary grid-line grid-line-all h-auto w-full object-contain object-left-top"
+    loading="lazy"
+    decoding="async"
+  />
+  <Image
+    src={secondary}
+    alt={`${alt} — compact mode`}
+    class="feature-crossfade__frame feature-crossfade__frame--secondary grid-line grid-line-all h-auto w-full object-contain object-left-top"
+    loading="lazy"
+    decoding="async"
+  />
+</div>
+
+<style>
+  .feature-crossfade {
+    position: relative;
+    aspect-ratio: 16 / 10;
+  }
+
+  .feature-crossfade__frame {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .feature-crossfade__frame--primary {
+    animation: feature-crossfade-a 6s ease-in-out infinite;
+  }
+
+  .feature-crossfade__frame--secondary {
+    animation: feature-crossfade-b 6s ease-in-out infinite;
+  }
+
+  @keyframes feature-crossfade-a {
+    0%,
+    42% {
+      opacity: 1;
+    }
+
+    50%,
+    92% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes feature-crossfade-b {
+    0%,
+    42% {
+      opacity: 0;
+    }
+
+    50%,
+    92% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .feature-crossfade__frame--primary,
+    .feature-crossfade__frame--secondary {
+      animation: none;
+    }
+
+    .feature-crossfade__frame--secondary {
+      display: none;
+    }
+  }
+</style>

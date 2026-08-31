@@ -1,0 +1,69 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const sections = [
+  {
+    title: 'Built in, not bolted on',
+    body: 'Astra ships with content blocking enabled out of the box. You do not need to hunt for extensions or tweak hidden settings to get a cleaner browsing experience from day one.',
+  },
+  {
+    title: 'What it blocks',
+    body: 'The built-in blocker targets intrusive ads, third-party trackers, and other disruptive page elements that slow pages down and follow you across the web. It is based on established filter lists used by the open-source blocking community.',
+  },
+  {
+    title: 'You stay in control',
+    body: 'You can adjust blocking levels, allowlist specific sites, and manage exceptions through Astra\'s settings. If a page breaks because of blocking, you can temporarily disable protection for that site without uninstalling anything.',
+  },
+  {
+    title: 'No extra install',
+    body: 'Unlike browsers that leave ad blocking to third-party extensions, Astra includes protection as a core part of the product — fewer moving parts, fewer permissions to grant, and one less thing to configure.',
+  },
+]
+---
+
+<Layout title={layout.adBlocking.title} description={layout.adBlocking.description}>
+  <ContentPage
+    label="Security"
+    title="Ad Blocking"
+    description="Astra includes a pre-installed ad and content blocker so you get cleaner pages without installing extra extensions."
+  >
+    <GridDivider />
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <div class="max-w-3xl space-y-12">
+          {
+            sections.map((section, i) => (
+              <article>
+                <div class="mb-4 flex items-center gap-4">
+                  <span class="section-number">{String(i + 1).padStart(2, '0')}</span>
+                  <h2 class="text-xl font-bold tracking-tight uppercase lg:text-2xl">
+                    {section.title}
+                  </h2>
+                </div>
+                <p class="text-sm leading-relaxed text-gray">{section.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="text-sm leading-relaxed text-gray">
+          Ad blocking works alongside Astra's broader privacy protections. For details on what data
+          Astra does and does not collect, see the{' '}
+          <a href="/privacy-policy" class="footer-link">Privacy Policy</a>.
+        </p>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

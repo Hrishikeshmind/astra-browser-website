@@ -1,0 +1,69 @@
+---
+import BackButton from '~/components/BackButton.astro'
+import GridDivider from '~/components/GridDivider.astro'
+import Layout from '~/layouts/Layout.astro'
+import { formatPostDate, getAllPosts } from '~/blog'
+import { getLocale, getOtherLocales, getPath } from '~/utils/i18n'
+import { render } from 'astro:content'
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts()
+
+  return posts.flatMap(post =>
+    [
+      {
+        params: {
+          slug: post.data.slug,
+          locale: undefined,
+        },
+        props: {
+          post,
+          locale: undefined,
+        },
+      },
+      ...getOtherLocales().map(locale => ({
+        params: {
+          slug: post.data.slug,
+          locale,
+        },
+        props: {
+          post,
+          locale,
+        },
+      })),
+    ].flat()
+  )
+}
+
+const { post } = Astro.props
+const locale = getLocale(Astro)
+const getLocalePath = getPath(locale)
+const { Content } = await render(post)
+---
+
+<Layout title={`${post.data.title} — Astra Browser`} description={post.data.title}>
+  <main>
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-24">
+        <BackButton href={getLocalePath('/blog')} />
+        <p class="section-label mb-4">Blog</p>
+        <h1 class="editorial-headline mb-6 text-4xl lg:text-5xl">{post.data.title}</h1>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray">
+          <time datetime={post.data.date.toISOString()}>{formatPostDate(post.data.date)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{post.data.author}</span>
+        </div>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <section>
+      <div class="container py-16 lg:py-20">
+        <article class="blog-content max-w-3xl">
+          <Content />
+        </article>
+      </div>
+    </section>
+  </main>
+</Layout>

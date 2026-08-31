@@ -1,0 +1,76 @@
+---
+import Button from '~/components/Button.astro'
+import { getLocale, getPath } from '~/utils/i18n'
+
+interface NavLink {
+  label: string
+  href: string
+}
+
+interface Props {
+  links: NavLink[]
+}
+
+const { links } = Astro.props
+const locale = getLocale(Astro)
+const getLocalePath = getPath(locale)
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/'
+const pathWithoutLocale = pathname.replace(/^\/ja(?=\/|$)/, '') || '/'
+
+function isLinkActive(href: string): boolean {
+  if (href.startsWith('http') || href.includes('#')) return false
+  const normalizedHref = href.replace(/\/$/, '') || '/'
+  if (normalizedHref === '/blog') {
+    return pathWithoutLocale === '/blog' || pathWithoutLocale.startsWith('/blog/')
+  }
+  return pathWithoutLocale === normalizedHref
+}
+---
+
+<input type="checkbox" id="mobile-menu-toggle" class="peer sr-only" aria-hidden="true" />
+
+<div
+  id="mobile-menu"
+  class="bg-paper grid-line grid-line-l fixed inset-y-0 right-0 z-40 w-72 translate-x-full transform transition-transform duration-200 peer-checked:translate-x-0 lg:hidden"
+>
+  <div class="grid-line grid-line-b flex items-center justify-between px-5 py-4">
+    <span class="section-label">Navigation</span>
+    <label for="mobile-menu-toggle" class="cursor-pointer p-1" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </label>
+  </div>
+
+  <nav class="px-5 py-6" aria-label="Mobile navigation">
+    <ul class="flex flex-col gap-5">
+      {
+        links.map(link => (
+          <li>
+            <a
+              class:list={['nav-link text-sm', isLinkActive(link.href) && 'nav-link-active']}
+              href={link.href.startsWith('http') ? link.href : getLocalePath(link.href)}
+              {...(link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              {...(isLinkActive(link.href) ? { 'aria-current': 'page' } : {})}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-8">
+      <Button href="/download" class="w-full">
+        Download Astra
+      </Button>
+    </div>
+  </nav>
+</div>
+
+<label
+  for="mobile-menu-toggle"
+  class="pointer-events-none fixed inset-0 z-30 bg-black opacity-0 transition-opacity duration-200 peer-checked:pointer-events-auto peer-checked:opacity-40"
+  aria-hidden="true"
+></label>

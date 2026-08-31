@@ -1,0 +1,87 @@
+---
+interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+  isHome?: boolean
+  redirect?: string
+}
+
+const { title, description, ogImage, isHome, redirect } = Astro.props
+const defaultDescription =
+  'Astra Browser is a privacy-first browser built for a faster, safer and more focused web experience. Download for Windows now — Linux coming soon.'
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/600.css'
+import '@fontsource/inter/700.css'
+import '../styles/global.css'
+import Footer from '~/components/Footer.astro'
+import NavBar from '~/components/NavBar.astro'
+import { getLocale } from '~/utils/i18n'
+const locale = getLocale(Astro)
+---
+
+<script is:inline data-cfasync="false">
+  const theme = (() => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme') ?? 'light'
+    }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark'
+    }
+    return 'light'
+  })()
+
+  document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light')
+</script>
+
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    {redirect ? <meta http-equiv="refresh" content={`0;url=${redirect}`} /> : null}
+    <meta name="description" content={description ?? defaultDescription} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-0.xml" />
+
+    {
+      isHome && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Astra Browser',
+            url: 'https://astra-browser.app/',
+          })}
+        />
+      )
+    }
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="theme-color" content="#f5f4f0" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:description" content={description ?? defaultDescription} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Astra Browser Release Notes"
+      href={`${Astro.url.origin}/feed.xml`}
+    />
+  </head>
+  <body class="bg-paper text-dark min-h-dvh overflow-x-hidden font-sans text-balance">
+    <NavBar />
+    <slot />
+    <Footer />
+  </body>
+</html>

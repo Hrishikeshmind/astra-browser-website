@@ -1,0 +1,445 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import Logo from '~/components/Logo.astro'
+import Layout from '~/layouts/Layout.astro'
+import ArrowRightIcon from '~/icons/ArrowRightIcon.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+import stableNotes from '~/release-notes/stable.json'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+const latestVersion = stableNotes[stableNotes.length - 1]?.version ?? '1.21.4b'
+
+const GITHUB_URL = 'https://github.com/Hrishikeshmind/astradesktop'
+
+const profileMeta = [
+  { label: 'Role', value: 'Solo Developer' },
+  { label: 'Project', value: 'Astra Browser' },
+  { label: 'Focus', value: 'Privacy · Browsing · Open Source' },
+  { label: 'Based in', value: 'India' },
+]
+
+const manifestoItems = [
+  {
+    title: 'Privacy by Default',
+    body: 'Your browsing experience should not require giving up unnecessary data.',
+  },
+  {
+    title: 'User Control',
+    body: 'Your browser should adapt to you — not the other way around.',
+  },
+  {
+    title: 'Open Source',
+    body: 'Technology should be inspectable, understandable and improvable.',
+  },
+  {
+    title: 'India First',
+    body: "Built with India's users, languages and needs in mind.",
+  },
+  {
+    title: 'Built with Purpose',
+    body: 'Every feature should have a reason to exist.',
+  },
+]
+---
+
+<Layout title={layout.developers.title} description={layout.developers.description}>
+  <main>
+    <!-- Hero -->
+    <section class="grid-line grid-line-b">
+      <div class="container grid gap-12 py-16 lg:grid-cols-[1fr_auto] lg:gap-16 lg:py-24">
+        <div>
+          <p class="section-label mb-4">The Developer Behind Astra</p>
+          <h1 class="editorial-headline mb-8 text-4xl lg:text-5xl">
+            Built by One.<br />Made for Millions.
+          </h1>
+          <p class="editorial-subhead mb-4">Hi, I'm Hrishikesh Gade.</p>
+          <p class="max-w-xl text-sm leading-relaxed text-gray">
+            An independent developer and final-year B.Tech student at Walchand Institute of
+            Technology, Solapur, building Astra Browser with a simple belief: the browser should
+            belong to the person using it.
+          </p>
+        </div>
+        <div
+          class="grid-line grid-line-all flex items-center justify-center self-start p-8 lg:p-10"
+          aria-hidden="true"
+        >
+          <Logo class="size-20 opacity-90 lg:size-24" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- Developer Identity -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <div class="mb-6 flex items-center gap-4">
+              <span class="section-number">01</span>
+              <span class="section-label">Identity</span>
+            </div>
+            <h2 class="mb-3 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+              Hrishikesh Gade
+            </h2>
+            <p class="mb-1 text-sm font-medium">Independent Developer</p>
+            <p class="mb-1 text-sm font-medium">Final-Year B.Tech Student</p>
+            <p class="text-sm text-gray">
+              Walchand Institute of Technology, Solapur, Maharashtra
+            </p>
+          </div>
+
+          <div class="grid-line grid-line-all">
+            {
+              profileMeta.map((item, i) => (
+                <div
+                  class:list={[
+                    'grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 p-5 sm:gap-x-8 sm:p-6',
+                    i < profileMeta.length - 1 && 'grid-line grid-line-b',
+                  ]}
+                >
+                  <span class="tech-meta">{item.label}</span>
+                  <span class="text-sm">{item.value}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- Why I Built Astra -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <article class="reveal-on-scroll max-w-3xl">
+          <div class="mb-6 flex items-center gap-4">
+            <span class="section-number">02</span>
+            <span class="section-label">Origin</span>
+          </div>
+          <h2 class="mb-8 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+            Why I Built Astra
+          </h2>
+          <div class="space-y-5 text-sm leading-relaxed text-gray">
+            <p>
+              I didn't start Astra because the world needed another browser. I started it because I
+              wanted to understand what a browser could become when it is built around the person
+              using it.
+            </p>
+            <p>
+              A browser is where we read, work, learn, communicate, create and explore the internet
+              every day. That makes it more than an application — it is one of the most important
+              pieces of software on a computer.
+            </p>
+            <p>
+              I wanted to build something that gives the user more control over that experience —
+              something more intentional, private, customizable and user-focused. Astra started from
+              that desire: to make a browser that feels like it was made for you, not for data
+              collection or engagement metrics.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- Why India -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <article class="reveal-on-scroll grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <div class="mb-6 flex items-center gap-4">
+              <span class="section-number">03</span>
+              <span class="section-label">Context</span>
+            </div>
+            <h2 class="text-3xl font-bold tracking-tight uppercase lg:text-4xl">Why India</h2>
+          </div>
+          <div class="space-y-5 text-sm leading-relaxed text-gray">
+            <p>
+              Astra is being built in India, for people in India and for users everywhere. India's
+              technology ecosystem is growing rapidly — millions of people are coming online, with
+              diverse languages, scripts and needs that deserve software built with them in mind.
+            </p>
+            <p>
+              India doesn't need to only consume technology built elsewhere. We can build it too.
+              Astra is my attempt to contribute to that ecosystem — a privacy-oriented browser that
+              understands local users while remaining open to the world.
+            </p>
+            <p class="tech-meta pt-2 opacity-80">
+              Built in India. Designed with Indian users in mind. Open to the world.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- Why Firefox / Zen -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <article class="reveal-on-scroll">
+          <div class="mb-6 flex items-center gap-4">
+            <span class="section-number">04</span>
+            <span class="section-label">Technology</span>
+          </div>
+          <h2 class="mb-8 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+            Why Firefox. Why Zen.
+          </h2>
+          <div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
+            <div class="space-y-5 text-sm leading-relaxed text-gray">
+              <p>
+                Astra is built on Firefox technology and evolved from the Zen Browser codebase. It
+                uses the mature Gecko engine and the open-source browser ecosystem that Mozilla has
+                developed over decades — not because of a partnership, but because this foundation
+                offers something worth building on.
+              </p>
+              <p>
+                I chose this path for the extensibility, the privacy-oriented philosophy, and the
+                ability to create a customized browser experience with real user control. Astra builds
+                its own experience on top of that foundation.
+              </p>
+            </div>
+            <div class="grid-line grid-line-all p-6 lg:p-8">
+              <p class="section-label mb-4">Foundation</p>
+              <ul class="space-y-3 text-sm leading-relaxed text-gray">
+                <li>Mature browser engine technology (Gecko / Firefox)</li>
+                <li>Open-source ecosystem and extensibility</li>
+                <li>Privacy-oriented development philosophy</li>
+                <li>User control over the browsing experience</li>
+              </ul>
+              <p class="tech-meta mt-6 opacity-60">
+                Astra is not affiliated with or endorsed by Mozilla or Zen Browser.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- Built by Solo Developer -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <article class="reveal-on-scroll max-w-3xl">
+          <div class="mb-6 flex items-center gap-4">
+            <span class="section-number">05</span>
+            <span class="section-label">Process</span>
+          </div>
+          <h2 class="mb-8 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+            Built by a Solo Developer
+          </h2>
+          <div class="space-y-5 text-sm leading-relaxed text-gray">
+            <p>
+              Astra is currently being built independently by me — while completing my final year of
+              engineering at Walchand Institute of Technology, Solapur. Building a browser is a large
+              undertaking, and I won't pretend otherwise.
+            </p>
+            <p>
+              The work spans browser UI, privacy features, security, customization, performance,
+              downloads and releases, this website, testing, debugging, user experience, and
+              open-source development. Each piece takes time, attention, and learning.
+            </p>
+            <p>
+              I am still learning. I am still building. And Astra is still growing. Every feature,
+              every bug fixed, every release and every late-night improvement is another step toward
+              the browser I imagined.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- From Student to Builder -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <article class="reveal-on-scroll grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+          <div>
+            <div class="mb-6 flex items-center gap-4">
+              <span class="section-number">06</span>
+              <span class="section-label">Journey</span>
+            </div>
+            <h2 class="mb-4 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+              From Student to Builder
+            </h2>
+            <p class="text-sm text-gray">
+              Final-year B.Tech · Walchand Institute of Technology · Solapur, Maharashtra
+            </p>
+          </div>
+          <div class="space-y-5 text-sm leading-relaxed text-gray">
+            <p>
+              Astra is being built alongside my engineering studies — not after them. The experience
+              of building it has become a practical journey through software engineering,
+              open-source development, product design, browser architecture, privacy, security,
+              systems engineering, and user experience.
+            </p>
+            <p>
+              What started as a project to learn has become something I care deeply about. Building
+              Astra has taught me more about how software works than any single course could — and
+              I'm still at the beginning of that journey.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- What Astra Stands For -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <div class="mb-12 max-w-2xl">
+          <div class="mb-6 flex items-center gap-4">
+            <span class="section-number">07</span>
+            <span class="section-label">Manifesto</span>
+          </div>
+          <h2 class="text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+            What Astra Stands For
+          </h2>
+        </div>
+
+        <div class="grid-line grid-line-all grid sm:grid-cols-2 lg:grid-cols-3">
+          {
+            manifestoItems.map((item, i) => (
+              <div
+                class:list={[
+                  'reveal-on-scroll p-6 lg:p-8',
+                  'grid-line grid-line-b',
+                  (i === 0 || i === 2 || i === 3) && 'sm:grid-line-r',
+                  (i === 0 || i === 1 || i === 3) && 'lg:grid-line-r',
+                ]}
+              >
+                <h3 class="mb-3 text-sm font-bold tracking-wide uppercase">{item.title}</h3>
+                <p class="text-sm leading-relaxed text-gray">{item.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- Current Status -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <div class="mb-10 max-w-2xl">
+          <div class="mb-6 flex items-center gap-4">
+            <span class="section-number">08</span>
+            <span class="section-label">Status</span>
+          </div>
+          <h2 class="text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+            Where Astra Is Today
+          </h2>
+          <p class="mt-4 text-sm leading-relaxed text-gray">
+            Astra is actively being developed. Built in public. Improved release by release.
+          </p>
+        </div>
+
+        <div class="grid-line grid-line-all max-w-2xl">
+          <div class="grid-line grid-line-b grid items-center gap-4 p-5 sm:grid-cols-[1fr_auto] sm:p-6">
+            <div>
+              <p class="text-sm font-bold tracking-wide uppercase">Windows</p>
+              <p class="tech-meta mt-0.5 opacity-60">v{latestVersion}</p>
+            </div>
+            <span class="tech-meta border border-dark px-2.5 py-1">Available now</span>
+          </div>
+          <div class="grid items-center gap-4 p-5 opacity-60 sm:grid-cols-[1fr_auto] sm:p-6">
+            <div>
+              <p class="text-sm font-bold tracking-wide uppercase">Linux</p>
+              <p class="tech-meta mt-0.5">Coming soon</p>
+            </div>
+            <span class="tech-meta border border-dark px-2.5 py-1 opacity-60">Coming soon</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- Open Source -->
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <article class="reveal-on-scroll grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
+          <div>
+            <div class="mb-6 flex items-center gap-4">
+              <span class="section-number">09</span>
+              <span class="section-label">Source</span>
+            </div>
+            <h2 class="mb-4 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+              Open Source, Built in Public
+            </h2>
+            <p class="text-sm leading-relaxed text-gray">
+              Astra's source code is available publicly. You can inspect it, learn from it, report
+              issues, and contribute. Transparency is part of how I want to build this project.
+            </p>
+          </div>
+          <div>
+            <a
+              href={GITHUB_URL}
+              class="btn-editorial btn-editorial-primary inline-flex"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Astra on GitHub
+              <ArrowRightIcon class="size-3" aria-hidden="true" />
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <!-- Personal Closing -->
+    <section>
+      <div class="container py-20 lg:py-28">
+        <article class="reveal-on-scroll mx-auto max-w-2xl text-center">
+          <div class="mb-6 flex items-center justify-center gap-4">
+            <span class="section-number">10</span>
+            <span class="section-label">Closing</span>
+          </div>
+          <h2 class="mb-10 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+            Why Keep Building?
+          </h2>
+          <div class="mb-10 space-y-5 text-sm leading-relaxed text-gray">
+            <p>Because I believe good software is worth building.</p>
+            <p>Because privacy should not be a luxury.</p>
+            <p>Because India can build technology for the world.</p>
+            <p>
+              And because sometimes the best way to learn how something works is to build it
+              yourself.
+            </p>
+          </div>
+          <p class="text-sm font-medium">— Hrishikesh Gade</p>
+          <p class="tech-meta mt-2 opacity-60">Creator of Astra Browser</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+        }
+      })
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  )
+
+  document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+    observer.observe(el)
+  })
+</script>

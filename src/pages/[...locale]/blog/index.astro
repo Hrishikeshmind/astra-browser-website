@@ -1,0 +1,67 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import Layout from '~/layouts/Layout.astro'
+import { formatPostDate, getAllPosts, getPostExcerpt } from '~/blog'
+import { getLocale, getPath } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const getLocalePath = getPath(locale)
+const posts = await getAllPosts()
+---
+
+<Layout title="Blog — Astra Browser" description="Notes on building Astra Browser — features, rebases, and what breaks along the way.">
+  <main>
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-24">
+        <p class="section-label mb-4">Blog</p>
+        <h1 class="editorial-headline mb-4 text-4xl lg:text-5xl">Building Astra</h1>
+        <p class="max-w-2xl text-sm leading-relaxed text-gray">
+          What I'm building, what breaks, and how I fixed it.
+        </p>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <section>
+      <div class="container py-16 lg:py-20">
+        {
+          posts.length === 0 ? (
+            <p class="text-sm text-gray">No posts yet.</p>
+          ) : (
+            <ul class="divide-y divide-[var(--astra-border)]">
+              {
+                posts.map(post => (
+                  <li class="py-10 first:pt-0 last:pb-0">
+                    <article>
+                      <p class="tech-meta mb-3">{formatPostDate(post.data.date)}</p>
+                      <h2 class="mb-3 text-2xl font-bold tracking-tight uppercase lg:text-3xl">
+                        <a
+                          href={getLocalePath(`/blog/${post.data.slug}`)}
+                          class="text-dark no-underline transition-opacity hover:opacity-70"
+                        >
+                          {post.data.title}
+                        </a>
+                      </h2>
+                      <p class="mb-5 max-w-3xl text-sm leading-relaxed text-gray">
+                        {getPostExcerpt(post)}
+                      </p>
+                      <a
+                        href={getLocalePath(`/blog/${post.data.slug}`)}
+                        class="footer-link text-sm font-medium"
+                      >
+                        Read more →
+                      </a>
+                    </article>
+                  </li>
+                ))
+              }
+            </ul>
+          )
+        }
+      </div>
+    </section>
+  </main>
+</Layout>

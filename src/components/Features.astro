@@ -1,0 +1,260 @@
+---
+import compactModeScreenshot from '~/assets/screenshots/compact-mode.png'
+import localAutoBackupScreenshot from '~/assets/screenshots/local-auto-backup.png'
+import boostScreenshot from '~/assets/screenshots/boost.png'
+import aiSidebarScreenshot from '~/assets/screenshots/ai-sidebar.png'
+import searchEngineScreenshot from '~/assets/screenshots/search-engine.png'
+import splitViewScreenshot from '~/assets/screenshots/split-view.png'
+import splitViewCompactScreenshot from '~/assets/screenshots/split-view-compact.png'
+import createFolderScreenshot from '~/assets/screenshots/create-folder.png'
+import uBlockLogo from '~/assets/ublock-origin.svg'
+import FeatureAnimatedVisual from '~/components/FeatureAnimatedVisual.astro'
+import FeatureLogoVisual from '~/components/FeatureLogoVisual.astro'
+import FeatureVisual from '~/components/FeatureVisual.astro'
+
+const features = [
+  {
+    number: '01',
+    id: 'compact-mode',
+    label: 'ASTRA / 01 · PRODUCTIVITY',
+    title: 'Compact Mode',
+    description:
+      'A clutter-free, icon-only sidebar that gives your content more room to breathe.',
+    tags: ['Icon-only sidebar', 'More screen space', 'Focus mode'],
+    layout: 'text-first' as const,
+    image: compactModeScreenshot,
+    imageAlt: 'Astra Browser Compact Mode',
+  },
+  {
+    number: '02',
+    id: 'privacy',
+    label: 'ASTRA / 02 · PRIVACY',
+    title: 'Local Auto-Backup',
+    description:
+      'Bookmarks, history, and settings are automatically backed up right on your device — no cloud, no third party involved. Your data stays yours, always.',
+    tags: ['Local', 'Private', 'No cloud'],
+    layout: 'visual-first' as const,
+    image: localAutoBackupScreenshot,
+    imageAlt: 'Astra Browser Local Auto-Backup settings',
+  },
+  {
+    number: '03',
+    id: 'boost',
+    label: 'ASTRA / 03 · CUSTOMIZATION',
+    title: 'Boost',
+    description:
+      'Recolor, refont, and reshape any website to match your vibe — plus native support for Indian scripts including Hindi, Tamil, Bengali, Telugu, and more.',
+    tags: ['Recolor', 'Refont', 'Reshape'],
+    layout: 'text-first' as const,
+    image: boostScreenshot,
+    imageAlt: 'Astra Browser Boost website customization',
+  },
+  {
+    number: '04',
+    id: 'ai-sidebar',
+    label: 'ASTRA / 04 · PRODUCTIVITY',
+    title: 'Built-in AI Sidebar',
+    description:
+      'Ask questions, summarize pages, and get quick help — without ever leaving your tab.',
+    tags: ['In-tab help', 'Summarize', 'Sidebar'],
+    layout: 'text-first' as const,
+    image: aiSidebarScreenshot,
+    imageAlt: 'Astra Browser built-in AI sidebar',
+  },
+  {
+    number: '05',
+    id: 'suraksha',
+    label: 'ASTRA / 05 · SECURITY',
+    title: 'Pre-installed Ad Blocker',
+    description:
+      'Enhanced tracking and content protection ships enabled out of the box — helping reduce trackers, ads, and disruptive page elements without installing extra extensions.',
+    tags: ['Built-in', 'No extra install', 'Cleaner browsing'],
+    layout: 'visual-first' as const,
+    visual: 'logo' as const,
+    logoSrc: uBlockLogo.src,
+    logoAlt: 'uBlock Origin',
+    image: undefined,
+    imageAlt: 'Astra Browser built-in content protection',
+  },
+  {
+    number: '06',
+    id: 'search-engine',
+    label: 'ASTRA / 06 · PRIVACY',
+    title: 'Choose Your Search Engine — Anytime',
+    description:
+      'No default forced on you. Switch between Google, DuckDuckGo, Bing, Brave, and more whenever you want, right from the browser — Astra never locks you into one.',
+    tags: ['Your choice', 'No lock-in', 'Multiple search engines'],
+    layout: 'text-first' as const,
+    image: searchEngineScreenshot,
+    imageAlt: 'Astra Browser search engine selection',
+  },
+  {
+    number: '07',
+    id: 'split-view',
+    label: 'ASTRA / 07 · PRODUCTIVITY',
+    title: 'Split View',
+    description:
+      'Work with two pages side by side in the same browser window. Compare, reference, and multitask without constantly switching tabs.',
+    tags: ['Side by side', 'Multitask', 'Compare'],
+    layout: 'visual-first' as const,
+    visual: 'animated' as const,
+    images: [splitViewScreenshot, splitViewCompactScreenshot] as const,
+    image: undefined,
+    imageAlt: 'Astra Browser Split View',
+  },
+  {
+    number: '08',
+    id: 'create-folder',
+    label: 'ASTRA / 08 · PRODUCTIVITY',
+    title: 'Create Folder',
+    description:
+      'Keep your tabs organized with folders in the sidebar — create one from the plus button, name it, and drag tabs inside to group projects or saved links.',
+    tags: ['Tab folders', 'Sidebar', 'Organize'],
+    layout: 'full' as const,
+    image: createFolderScreenshot,
+    imageAlt: 'Astra Browser tab folders',
+  },
+]
+---
+
+<section id="features" class="grid-line grid-line-b">
+  <div class="container py-16 lg:py-24">
+    <div class="mb-12 max-w-2xl lg:mb-16">
+      <p class="section-label mb-4">Capabilities</p>
+      <h2 class="editorial-headline text-4xl lg:text-5xl">
+        Engineered<br />for the web
+      </h2>
+      <p class="mt-6 text-sm leading-relaxed text-gray">
+        Every feature in Astra is designed with intention — no bloat, no dark patterns, no
+        compromise on your privacy or performance.
+      </p>
+    </div>
+
+    <!-- Technical origin -->
+    <div class="grid-line grid-line-all mb-12 p-6 lg:mb-16 lg:p-8">
+      <p class="section-label mb-3">Technology</p>
+      <p class="mb-2 max-w-2xl text-sm leading-relaxed">
+        Built on Firefox technology. Evolved from Zen Browser.
+      </p>
+      <p class="max-w-2xl text-sm leading-relaxed text-gray">
+        Independently developed. Open source. Built in India.
+      </p>
+      <p class="tech-meta mt-4 opacity-60">
+        Astra is not affiliated with or endorsed by Mozilla or Zen Browser.
+      </p>
+    </div>
+
+    <!-- Feature showcase -->
+    <div class="grid-line grid-line-all">
+      {
+        features.map((feature, i) => (
+          <article
+            id={feature.id}
+            class:list={[
+              'reveal-on-scroll',
+              i < features.length - 1 && 'grid-line grid-line-b',
+              feature.layout === 'full'
+                ? 'flex flex-col gap-8 p-6 lg:p-10'
+                : 'grid gap-8 p-6 lg:grid-cols-2 lg:gap-12 lg:p-10',
+            ]}
+          >
+            {feature.layout === 'full' ? (
+              <>
+                <div class="flex flex-col justify-center">
+                  <div class="mb-4 flex items-center gap-4">
+                    <span class="section-number">{feature.number}</span>
+                    <span class="section-label">{feature.label}</span>
+                  </div>
+                  <h3 class="mb-4 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+                    {feature.title}
+                  </h3>
+                  <p class="mb-6 max-w-2xl text-sm leading-relaxed text-gray">
+                    {feature.description}
+                  </p>
+                  <ul class="flex flex-wrap gap-2">
+                    {feature.tags.map(tag => (
+                      <li class="tech-meta border border-dark px-2.5 py-1">{tag}</li>
+                    ))}
+                  </ul>
+                </div>
+                {
+                  feature.visual === 'animated' && feature.images ? (
+                    <FeatureAnimatedVisual images={feature.images} alt={feature.imageAlt} />
+                  ) : feature.visual === 'logo' && feature.logoSrc ? (
+                    <FeatureLogoVisual
+                      src={feature.logoSrc}
+                      alt={feature.logoAlt ?? feature.imageAlt}
+                    />
+                  ) : (
+                    <FeatureVisual src={feature.image} alt={feature.imageAlt} />
+                  )
+                }
+              </>
+            ) : (
+              <>
+                <div
+                  class:list={[
+                    'flex flex-col justify-center',
+                    feature.layout === 'visual-first' && 'lg:order-2',
+                  ]}
+                >
+                  <div class="mb-4 flex items-center gap-4">
+                    <span class="section-number">{feature.number}</span>
+                    <span class="section-label">{feature.label}</span>
+                  </div>
+                  <h3 class="mb-4 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+                    {feature.title}
+                  </h3>
+                  <p class="mb-6 max-w-md text-sm leading-relaxed text-gray">
+                    {feature.description}
+                  </p>
+                  <ul class="flex flex-wrap gap-2">
+                    {feature.tags.map(tag => (
+                      <li class="tech-meta border border-dark px-2.5 py-1">{tag}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div
+                  class:list={[
+                    'flex items-center justify-center',
+                    feature.layout === 'visual-first' && 'lg:order-1',
+                  ]}
+                >
+                  {
+                    feature.visual === 'animated' && feature.images ? (
+                      <FeatureAnimatedVisual images={feature.images} alt={feature.imageAlt} />
+                    ) : feature.visual === 'logo' && feature.logoSrc ? (
+                      <FeatureLogoVisual
+                        src={feature.logoSrc}
+                        alt={feature.logoAlt ?? feature.imageAlt}
+                      />
+                    ) : (
+                      <FeatureVisual src={feature.image} alt={feature.imageAlt} />
+                    )
+                  }
+                </div>
+              </>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+        }
+      })
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  )
+
+  document.querySelectorAll('#features article').forEach(el => {
+    observer.observe(el)
+  })
+</script>

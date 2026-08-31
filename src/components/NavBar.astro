@@ -1,0 +1,82 @@
+---
+import Button from '~/components/Button.astro'
+import Logo from '~/components/Logo.astro'
+import ChevronDownIcon from '~/icons/ChevronDownIcon.astro'
+import DownloadIcon from '~/icons/DownloadIcon.astro'
+import MenuIcon from '~/icons/MenuIcon.astro'
+import { getLocale, getPath } from '~/utils/i18n'
+import MobileMenu from './MobileMenu.astro'
+
+const locale = getLocale(Astro)
+const getLocalePath = getPath(locale)
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/'
+const pathWithoutLocale = pathname.replace(/^\/ja(?=\/|$)/, '') || '/'
+
+function isLinkActive(href: string): boolean {
+  if (href.startsWith('http') || href.includes('#')) return false
+  const normalizedHref = href.replace(/\/$/, '') || '/'
+  if (normalizedHref === '/blog') {
+    return pathWithoutLocale === '/blog' || pathWithoutLocale.startsWith('/blog/')
+  }
+  return pathWithoutLocale === normalizedHref
+}
+
+const navLinks = [
+  { label: 'Features', href: '/#features' },
+  { label: 'Privacy', href: '/privacy-policy' },
+  { label: 'Developers', href: '/developers' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Support', href: 'https://github.com/Hrishikeshmind/astradesktop/discussions' },
+]
+---
+
+<header class="grid-line grid-line-b bg-paper sticky top-0 z-50">
+  <nav class="container flex items-center justify-between gap-4 py-4 lg:py-5" aria-label="Main navigation">
+    <!-- Logo -->
+    <a
+      class="flex shrink-0 items-center gap-2.5 no-underline"
+      href={getLocalePath('/')}
+      aria-label="Astra Browser home"
+    >
+      <Logo class="size-7 text-dark" />
+      <span class="text-xs font-bold tracking-[0.12em] uppercase">Astra Browser</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden items-center gap-6 lg:flex xl:gap-8">
+      {
+        navLinks.map(link => (
+          <li>
+            <a
+              class:list={['nav-link', isLinkActive(link.href) && 'nav-link-active']}
+              href={link.href.startsWith('http') ? link.href : getLocalePath(link.href)}
+              {...(link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              {...(isLinkActive(link.href) ? { 'aria-current': 'page' } : {})}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-3">
+      <Button href="/download" class="hidden !px-4 !py-2.5 sm:inline-flex">
+        Download Astra
+        <ChevronDownIcon class="size-3 rotate-[-90deg]" aria-hidden="true" />
+      </Button>
+
+      <Button href="/download" class="!p-2.5 sm:hidden" aria-label="Download Astra">
+        <DownloadIcon class="size-4" />
+      </Button>
+
+      <label for="mobile-menu-toggle" class="cursor-pointer p-1 lg:hidden" aria-label="Open menu">
+        <MenuIcon class="size-5" />
+      </label>
+    </div>
+  </nav>
+</header>
+
+<MobileMenu links={navLinks} />

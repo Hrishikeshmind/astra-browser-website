@@ -1,0 +1,88 @@
+---
+import Button from '~/components/Button.astro'
+import Description from '~/components/Description.astro'
+import SocialMediaStrip from '~/components/SocialMediaStrip.astro'
+import ArrowRightIcon from '~/icons/ArrowRightIcon.astro'
+import Layout from '~/layouts/Layout.astro'
+
+import Video from '~/components/Video.astro'
+import { releaseNotes } from '~/release-notes'
+import whatsNewText from '~/release-notes/whats-new.json'
+import { getLocale, getUI } from '~/utils/i18n'
+export { getStaticPaths } from '~/utils/i18n'
+
+let latestVersion = releaseNotes[0]
+
+const locale = getLocale(Astro)
+
+const {
+  routes: { whatsNew },
+  layout,
+} = getUI(locale)
+
+// Just redirect to the release notes if we are in a patch version
+if (latestVersion.version.split('.').length > 2) {
+  if (whatsNewText[1] !== latestVersion.version) {
+    return Astro.redirect(`/release-notes#${latestVersion.version}`)
+  } else {
+    // We need to set the last major version for the text to make sense
+    const majorVersion = latestVersion.version.split('.').slice(0, 2).join('.') + 'b'
+    latestVersion = releaseNotes.find(v => v.version === majorVersion) || latestVersion
+  }
+}
+---
+
+<Layout title={layout.whatsNew.title.replace('{latestVersion.version}', latestVersion.version)}>
+  <main
+    class="container flex flex-col gap-12 py-12 xl:grid xl:min-h-[calc(100vh-12rem)] xl:grid-cols-[2fr_3fr]"
+  >
+    <div class="flex flex-col gap-8">
+      <div>
+        <Description class="text-5xl font-bold md:text-6xl"
+          >{whatsNew.title.replace('{latestVersion.version}', latestVersion.version)}</Description
+        >
+        <Description>{latestVersion.date}</Description>
+      </div>
+      <div>
+        <Fragment set:html={whatsNewText[0].replace(/\n/g, '<br>')} />
+      </div>
+      <ul class="hidden list-disc space-y-2 xl:container xl:block">
+        <li>
+          <a href="https://github.com/Hrishikeshmind/astradesktop/issues/new/choose" target="_blank">
+            <Description class="m-0 inline text-base font-bold">
+              {whatsNew.reportIssue}
+            </Description>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/Hrishikeshmind/astradesktop/discussions" target="_blank">
+            <Description class="m-0 inline text-base font-bold">
+              {whatsNew.joinDiscord}
+            </Description>
+          </a>
+        </li>
+      </ul>
+      <div class="flex flex-wrap gap-8 place-self-start xl:place-self-center">
+        <Button
+          href={`/release-notes#${latestVersion.version}`}
+          isPrimary
+          class="flex w-fit items-center gap-2"
+        >
+          <span>{whatsNew.readFullReleaseNotes}</span>
+          <ArrowRightIcon />
+        </Button>
+        <SocialMediaStrip gap="6" />
+      </div>
+    </div>
+
+    <Video
+      name="whats-new"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="none"
+      class="rounded-3xl object-cover shadow-lg"
+    />
+  </main>
+</Layout>

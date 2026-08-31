@@ -1,0 +1,55 @@
+---
+import Logo from './Logo.astro'
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<div class:list={['browser-mockup grid-line grid-line-all bg-paper', className]} role="img" aria-label="Astra Browser preview">
+  <!-- Title bar -->
+  <div class="grid-line grid-line-b flex items-center gap-3 px-4 py-2.5">
+    <div class="flex gap-1.5" aria-hidden="true">
+      <span class="size-2.5 border border-dark bg-muted"></span>
+      <span class="size-2.5 border border-dark bg-muted"></span>
+      <span class="size-2.5 border border-dark bg-muted"></span>
+    </div>
+    <div class="tech-meta flex-1 text-center opacity-60">astra://new-tab</div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="grid-line grid-line-b flex items-center gap-2 px-3 py-2">
+    <div class="flex gap-1" aria-hidden="true">
+      <span class="size-5 border border-dark opacity-30"></span>
+      <span class="size-5 border border-dark opacity-30"></span>
+    </div>
+    <div class="flex flex-1 items-center border border-dark px-3 py-1">
+      <span class="tech-meta opacity-40">Search or enter address</span>
+    </div>
+    <div class="size-5 border border-dark opacity-30" aria-hidden="true"></div>
+  </div>
+
+  <!-- Content area -->
+  <div class="flex min-h-[220px] flex-col items-center justify-center gap-4 px-8 py-12 md:min-h-[280px]">
+    <Logo class="size-16 text-dark md:size-20" />
+    <div class="text-center">
+      <p class="editorial-subhead font-semibold tracking-tight uppercase">Built for India.</p>
+      <p class="editorial-subhead font-semibold tracking-tight uppercase">Built for you.</p>
+    </div>
+    <p class="tech-meta max-w-[200px] text-center opacity-50">
+      Privacy-first browsing · Engineered in India
+    </p>
+  </div>
+</div>
+
+<style>
+  .browser-mockup {
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  :root[data-theme='dark'] .browser-mockup {
+    box-shadow: 8px 8px 0 rgba(255, 255, 255, 0.04);
+  }
+</style>

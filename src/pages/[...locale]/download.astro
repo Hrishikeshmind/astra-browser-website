@@ -1,0 +1,189 @@
+---
+import { icon, library } from '@fortawesome/fontawesome-svg-core'
+import { faLinux, faWindows } from '@fortawesome/free-brands-svg-icons'
+import DownloadScript from '~/components/download/DownloadScript.astro'
+import { getReleases } from '~/components/download/release-data'
+import GridDivider from '~/components/GridDivider.astro'
+import Layout from '~/layouts/Layout.astro'
+import ArrowRightIcon from '~/icons/ArrowRightIcon.astro'
+import {
+  formatFileSize,
+  formatReleaseVersion,
+  getAssetSize,
+  getLatestRelease,
+} from '~/utils/githubReleases'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+const releases = getReleases(locale)
+
+library.add(faWindows, faLinux)
+const windowsIcon = icon({ prefix: 'fab', iconName: 'windows' })
+const linuxIcon = icon({ prefix: 'fab', iconName: 'linux' })
+
+const windowsDownloadSpecs = [
+  {
+    platform: 'Astra for Windows',
+    arch: 'Windows x86_64',
+    archCaption: 'Recommended for most Windows PCs (Intel/AMD processors)',
+    format: 'Installer',
+    icon: windowsIcon.html,
+    link: releases.windows.x86_64.link,
+    filename: 'astra.installer.exe',
+    cpu: 'x86_64',
+  },
+  {
+    platform: 'Astra for Windows',
+    arch: 'ARM64',
+    archCaption:
+      'Only for Windows-on-ARM devices (e.g. Surface Pro X, Snapdragon-based laptops). Not sure? Check Settings → System → About → System type on your PC — if it says "x64-based processor", use the option above instead.',
+    format: 'Installer',
+    icon: windowsIcon.html,
+    link: releases.windows.arm64.link,
+    filename: 'astra.installer-arm64.exe',
+    cpu: 'arm64',
+  },
+]
+
+let latestVersion = '1.21.4b'
+let windowsDownloads = windowsDownloadSpecs.map(item => ({ ...item, fileSize: null as string | null }))
+
+try {
+  const release = await getLatestRelease()
+  latestVersion = formatReleaseVersion(release.tag_name)
+  windowsDownloads = windowsDownloadSpecs.map(item => {
+    const size = getAssetSize(release.assets, item.filename)
+    return {
+      ...item,
+      fileSize: size != null ? formatFileSize(size) : null,
+    }
+  })
+} catch {
+  // Fall back to hardcoded version if GitHub API is unavailable.
+}
+---
+
+<DownloadScript />
+
+<Layout title={layout.download.title} description={layout.download.description}>
+  <main>
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-24">
+        <p class="section-label mb-4">Release · v{latestVersion}</p>
+        <h1 class="editorial-headline mb-4 text-4xl lg:text-5xl">Get Astra</h1>
+        <p class="max-w-lg text-sm leading-relaxed text-gray">
+          Astra Browser is available for Windows now. Linux support is arriving soon.
+        </p>
+        <p class="tech-meta mt-4 opacity-60">Windows · Available now</p>
+
+        <div
+          id="twilight-info"
+          class="mt-6 hidden max-w-xl border border-dark bg-subtle p-4 text-sm data-[twilight='true']:block"
+        >
+          You are viewing Twilight (pre-release) builds. These may contain bugs and unfinished
+          features.
+        </div>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <section class="container py-12 lg:py-16">
+      <div class="grid-line grid-line-all">
+        {
+          windowsDownloads.map((item, i) => (
+            <div
+              id={`windows-${item.cpu}-downloads`}
+              class:list={[
+                'platform-section grid items-center gap-4 p-5 transition-colors hover:bg-subtle sm:grid-cols-[auto_1fr_auto_auto_auto] sm:gap-6 sm:p-6',
+                'grid-line grid-line-b',
+              ]}
+              data-platform="windows"
+              data-cpu={item.cpu}
+            >
+              <span class="flex size-10 items-center justify-center border border-dark">
+                <Fragment set:html={item.icon} />
+              </span>
+              <div>
+                <p class="text-sm font-bold tracking-wide uppercase">{item.platform}</p>
+                <p class="tech-meta mt-0.5 opacity-60">
+                  {item.filename}{item.fileSize ? ` · ${item.fileSize}` : ''}
+                </p>
+                <p class="tech-meta mt-2 max-w-md text-xs leading-relaxed opacity-60">
+                  {item.archCaption}
+                </p>
+              </div>
+              <span class="tech-meta hidden border border-dark px-2 py-0.5 sm:block">
+                Available now
+              </span>
+              <span class="tech-meta hidden sm:block">{item.arch}</span>
+              <span class="tech-meta hidden sm:block">{item.format}</span>
+              <a
+                href={item.link}
+                class="download-button btn-editorial btn-editorial-primary w-full sm:w-auto"
+                download
+              >
+                Download
+                <ArrowRightIcon class="size-3" aria-hidden="true" />
+              </a>
+            </div>
+          ))
+        }
+
+        <div
+          id="linux-coming-soon"
+          class="platform-section grid items-center gap-4 p-5 opacity-60 sm:grid-cols-[auto_1fr_auto_auto_auto] sm:gap-6 sm:p-6"
+          data-platform="linux"
+          aria-disabled="true"
+        >
+          <span class="flex size-10 items-center justify-center border border-dark opacity-50">
+            <Fragment set:html={linuxIcon.html} />
+          </span>
+          <div>
+            <p class="text-sm font-bold tracking-wide uppercase">Linux</p>
+            <p class="tech-meta mt-0.5">Linux support is arriving soon.</p>
+            <p class="tech-meta mt-0.5 opacity-60">Expected launch: 2–5 days</p>
+          </div>
+          <span class="tech-meta hidden border border-dark px-2 py-0.5 sm:block">Coming soon</span>
+          <span class="tech-meta hidden sm:block">—</span>
+          <span class="tech-meta hidden sm:block">—</span>
+          <span
+            class="btn-editorial w-full cursor-not-allowed opacity-50 sm:w-auto"
+            aria-hidden="true"
+          >
+            Coming soon
+          </span>
+        </div>
+      </div>
+
+      <div class="mt-10 flex flex-col gap-2">
+        <p class="tech-meta flex items-center gap-2">
+          <span class="border border-dark px-2 py-0.5">BETA</span>
+          Current release channel
+        </p>
+        <p class="text-xs leading-relaxed text-gray">
+          Checksums and additional formats are available on the{' '}
+          <a
+            href="https://github.com/Hrishikeshmind/astradesktop/releases/latest"
+            class="astra-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub release page
+          </a>
+          .
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .platform-section .svg-inline--fa {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+</style>

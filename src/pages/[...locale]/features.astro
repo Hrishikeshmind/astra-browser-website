@@ -1,0 +1,116 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getPath, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const getLocalePath = getPath(locale)
+const { layout } = getUI(locale)
+
+const features = [
+  {
+    number: '01',
+    label: 'Productivity',
+    title: 'Compact Mode',
+    description:
+      'A clutter-free, icon-only sidebar that gives your content more room to breathe. Hide labels when you do not need them and keep your focus on the page.',
+    tags: ['Icon-only sidebar', 'More screen space', 'Focus mode'],
+  },
+  {
+    number: '02',
+    label: 'Privacy',
+    title: 'Local Auto-Backup',
+    description:
+      'Bookmarks, history, and settings are automatically backed up right on your device — no cloud, no third party involved. Your data stays yours, always.',
+    tags: ['Local', 'Private', 'No cloud'],
+  },
+  {
+    number: '03',
+    label: 'Customization',
+    title: 'Boost',
+    description:
+      'Recolor, refont, and reshape any website to match your vibe — plus native support for Indian scripts including Hindi, Tamil, Bengali, Telugu, and more.',
+    tags: ['Recolor', 'Refont', 'Reshape'],
+  },
+  {
+    number: '04',
+    label: 'Productivity',
+    title: 'Built-in AI Sidebar',
+    description:
+      'Ask questions, summarize pages, and get quick help — without ever leaving your tab.',
+    tags: ['In-tab help', 'Summarize', 'Sidebar'],
+  },
+  {
+    number: '05',
+    label: 'Security',
+    title: 'Pre-installed Ad Blocker',
+    description:
+      'Enhanced tracking and content protection ships enabled out of the box — helping reduce trackers, ads, and disruptive page elements without installing extra extensions.',
+    tags: ['Built-in', 'No extra install', 'Cleaner browsing'],
+  },
+  {
+    number: '06',
+    label: 'Privacy',
+    title: 'Choose Your Search Engine — Anytime',
+    description:
+      'No default forced on you. Switch between Google, DuckDuckGo, Bing, Brave, and more whenever you want, right from the browser — Astra never locks you into one.',
+    tags: ['Your choice', 'No lock-in', 'Multiple search engines'],
+  },
+]
+---
+
+<Layout title={layout.features.title} description={layout.features.description}>
+  <ContentPage
+    label="Capabilities"
+    title="Engineered for the web"
+    description="Every feature in Astra is designed with intention — no bloat, no dark patterns, no compromise on your privacy or performance."
+  >
+    <GridDivider />
+    {
+      features.map((feature, index) => (
+        <>
+          <section class="grid-line grid-line-b">
+            <div class="container py-16 lg:py-20">
+              <article class="grid gap-8 lg:grid-cols-[auto_1fr] lg:gap-16">
+                <div>
+                  <div class="mb-4 flex items-center gap-4">
+                    <span class="section-number">{feature.number}</span>
+                    <span class="section-label">{feature.label}</span>
+                  </div>
+                  <h2 class="text-2xl font-bold tracking-tight uppercase lg:text-3xl">
+                    {feature.title}
+                  </h2>
+                </div>
+                <div>
+                  <p class="mb-6 text-sm leading-relaxed text-gray">{feature.description}</p>
+                  <ul class="flex flex-wrap gap-2">
+                    {feature.tags.map(tag => (
+                      <li class="tech-meta grid-line grid-line-all px-3 py-1.5">{tag}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </section>
+          {index < features.length - 1 && <GridDivider />}
+        </>
+      ))
+    }
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="text-sm leading-relaxed text-gray">
+          Built on Firefox technology. Evolved from Zen Browser. Independently developed. Open
+          source. Built in India. Astra is not affiliated with or endorsed by Mozilla or Zen
+          Browser.
+        </p>
+        <a href={getLocalePath('/download')} class="footer-link mt-6 inline-block text-sm font-medium">
+          Download Astra →
+        </a>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

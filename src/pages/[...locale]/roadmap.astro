@@ -1,0 +1,111 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const sections = [
+  {
+    label: 'Coming Soon',
+    items: [
+      {
+        title: 'Security patch release',
+        body: 'A batch of backported security fixes, held back for a dedicated release so they can ship together safely and with proper stability testing.',
+      },
+      {
+        title: 'A stable named release',
+        body: 'Moving from frequent small builds to fewer, more thoroughly tested releases with clear version names.',
+      },
+      {
+        title: 'Right-side sidebar support',
+        body: 'Sidebar placement on the right is temporarily disabled while we polish the experience before bringing it back.',
+      },
+    ],
+  },
+  {
+    label: 'In Progress',
+    items: [
+      {
+        title: 'Boost (per-site theming)',
+        body: 'Refining per-site recoloring, fonts, and layout controls — and possibly renaming the feature as it matures.',
+      },
+      {
+        title: 'Staying in sync with the latest Firefox engine improvements',
+        body: 'Keeping Astra up to date with upstream Firefox engine work so you benefit from ongoing performance, compatibility, and security improvements.',
+      },
+    ],
+  },
+  {
+    label: 'Planned',
+    items: [
+      {
+        title: 'Linux support',
+        body: 'Linux builds after the Windows launch stabilizes and the core experience is solid.',
+      },
+      {
+        title: 'Friendly astra:// style shortcut pages',
+        body: 'Built-in shortcut pages using astra:// URLs for quick access to settings, help, and other in-browser destinations.',
+      },
+      {
+        title: 'macOS support',
+        body: 'Exploring macOS builds — no fixed timeline yet, but it is on the radar.',
+      },
+    ],
+  },
+]
+---
+
+<Layout title={layout.roadmap.title} description={layout.roadmap.description}>
+  <ContentPage
+    label="Product"
+    title="Roadmap"
+    description="What we are working on next for Astra Browser. Priorities can shift as we learn from users and releases."
+  >
+    <GridDivider />
+    {
+      sections.map((section, sectionIndex) => (
+        <>
+          <section class="grid-line grid-line-b">
+            <div class="container py-16 lg:py-20">
+              <p class="section-label mb-8">{section.label}</p>
+              <div class="grid gap-6 lg:grid-cols-2">
+                {section.items.map(item => (
+                  <article class="grid-line grid-line-all p-6 lg:p-8">
+                    <h2 class="mb-3 text-sm font-bold tracking-tight uppercase">{item.title}</h2>
+                    <p class="text-sm leading-relaxed text-gray">{item.body}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+          {sectionIndex < sections.length - 1 && <GridDivider />}
+        </>
+      ))
+    }
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="text-sm leading-relaxed text-gray">
+          Have feedback on what should come next?{' '}
+          <a
+            href="https://github.com/Hrishikeshmind/astradesktop/discussions"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+          >
+            Join the discussion on GitHub
+          </a>{' '}
+          or{' '}
+          <a href="/community" class="footer-link">
+            visit the community page
+          </a>.
+        </p>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

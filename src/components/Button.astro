@@ -1,0 +1,55 @@
+---
+import { getLocale, getPath } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const getLocalePath = getPath(locale)
+const {
+  class: className,
+  variant,
+  isPrimary,
+  isAlert,
+  isBordered,
+  href,
+  id,
+  extra,
+  localePath = true,
+  ...props
+} = Astro.props
+
+const resolvedVariant = variant
+  ? variant
+  : isPrimary
+    ? 'primary'
+    : isAlert
+      ? 'alert'
+      : isBordered
+        ? 'secondary'
+        : 'secondary'
+
+const variantClass =
+  resolvedVariant === 'primary'
+    ? 'btn-editorial-primary'
+    : resolvedVariant === 'alert'
+      ? 'btn-editorial-secondary !bg-red-100 !border-red-300'
+      : resolvedVariant === 'ghost'
+        ? 'btn-editorial-secondary !border-transparent'
+        : 'btn-editorial-secondary'
+---
+
+{
+  href ? (
+    <a
+      id={id}
+      {...extra}
+      href={localePath ? getLocalePath(href) : href}
+      class:list={['btn-editorial', variantClass, className]}
+      {...props}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button id={id} {...extra} class:list={['btn-editorial', variantClass, className]} {...props}>
+      <slot />
+    </button>
+  )
+}

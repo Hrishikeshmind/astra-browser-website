@@ -1,0 +1,24 @@
+<script>
+  // Check for twilight mode
+  async function checkTwilightMode() {
+    const urlParams = new URLSearchParams(window.location.search)
+    const isTwilight = urlParams.has('twilight')
+
+    if (isTwilight) {
+      const twilightInfoElem = document.getElementById('twilight-info')
+      twilightInfoElem?.setAttribute('data-twilight', 'true')
+
+      const downloadLinks = document.querySelectorAll('a.download-button')
+
+      for (const link of downloadLinks) {
+        const href = link.getAttribute('href')
+        if (href && href.includes('/latest/download/')) {
+          const twilightHref = href.replace('/latest/download/', '/download/twilight-1/')
+          link.setAttribute('href', twilightHref)
+        }
+      }
+    }
+  }
+
+  checkTwilightMode()
+</script>

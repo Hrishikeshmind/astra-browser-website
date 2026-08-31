@@ -1,0 +1,69 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const sections = [
+  {
+    title: 'Trackers blocked by default',
+    body: "Astra's tracking protection helps stop third-party trackers from following you across websites. Many sites load invisible scripts that collect browsing habits — Astra works to block those requests before they leave your browser.",
+  },
+  {
+    title: 'Part of a privacy-first design',
+    body: "Tracking protection is not an afterthought. It sits alongside Astra's built-in ad blocker, local-only backups, and no-telemetry policy. The goal is simple: your browsing should not become someone else's data product.",
+  },
+  {
+    title: 'Local data stays local',
+    body: "Bookmarks, history, and settings are stored on your device — not uploaded to Astra's servers. Local Auto-Backup keeps a copy on your machine without involving any cloud service. You control when and how your browsing data is cleared.",
+  },
+  {
+    title: 'No telemetry from Astra',
+    body: 'Astra does not collect usage analytics, browsing history, or personal data. The browser does not phone home with what you read, search for, or click. What you do online stays between you and the sites you visit.',
+  },
+]
+---
+
+<Layout title={layout.trackingProtection.title} description={layout.trackingProtection.description}>
+  <ContentPage
+    label="Security"
+    title="Tracking Protection"
+    description="Astra limits third-party tracking and keeps your browsing data on your device — not on our servers."
+  >
+    <GridDivider />
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <div class="max-w-3xl space-y-12">
+          {
+            sections.map((section, i) => (
+              <article>
+                <div class="mb-4 flex items-center gap-4">
+                  <span class="section-number">{String(i + 1).padStart(2, '0')}</span>
+                  <h2 class="text-xl font-bold tracking-tight uppercase lg:text-2xl">
+                    {section.title}
+                  </h2>
+                </div>
+                <p class="text-sm leading-relaxed text-gray">{section.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="text-sm leading-relaxed text-gray">
+          Read the full{' '}
+          <a href="/privacy-policy" class="footer-link">Privacy Policy</a> for details on data
+          collection, local storage, and your rights.
+        </p>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

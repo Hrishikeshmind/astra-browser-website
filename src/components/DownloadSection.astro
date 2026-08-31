@@ -1,0 +1,132 @@
+---
+import ArrowRightIcon from '~/icons/ArrowRightIcon.astro'
+import { getReleases } from '~/components/download/release-data'
+import {
+  formatFileSize,
+  formatReleaseVersion,
+  getAssetSize,
+  getLatestRelease,
+} from '~/utils/githubReleases'
+import { getLocale } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const releases = getReleases(locale)
+
+const windowsDownloadSpecs = [
+  {
+    platform: 'Astra for Windows',
+    arch: 'Windows x86_64',
+    archCaption: 'Recommended for most Windows PCs (Intel/AMD processors)',
+    format: 'Installer',
+    link: releases.windows.x86_64.link,
+    filename: 'astra.installer.exe',
+  },
+  {
+    platform: 'Astra for Windows',
+    arch: 'ARM64',
+    archCaption:
+      'Only for Windows-on-ARM devices (e.g. Surface Pro X, Snapdragon-based laptops). Not sure? Check Settings → System → About → System type on your PC — if it says "x64-based processor", use the option above instead.',
+    format: 'Installer',
+    link: releases.windows.arm64.link,
+    filename: 'astra.installer-arm64.exe',
+  },
+]
+
+let latestVersion = '1.21.4b'
+let windowsDownloads = windowsDownloadSpecs.map(item => ({ ...item, fileSize: null as string | null }))
+
+try {
+  const release = await getLatestRelease()
+  latestVersion = formatReleaseVersion(release.tag_name)
+  windowsDownloads = windowsDownloadSpecs.map(item => {
+    const size = getAssetSize(release.assets, item.filename)
+    return {
+      ...item,
+      fileSize: size != null ? formatFileSize(size) : null,
+    }
+  })
+} catch {
+  // Fall back to hardcoded version if GitHub API is unavailable.
+}
+---
+
+<section id="download" class="grid-line grid-line-b">
+  <div class="container py-16 lg:py-24">
+    <div class="mb-12 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div>
+        <p class="section-label mb-4">Download</p>
+        <h2 class="editorial-headline text-4xl lg:text-5xl">Get Astra</h2>
+        <p class="tech-meta mt-4 opacity-60">Windows · Available now</p>
+      </div>
+      <p class="tech-meta lg:text-right">v{latestVersion}</p>
+    </div>
+
+    <div class="grid-line grid-line-all">
+      {
+        windowsDownloads.map((item, i) => (
+          <div
+            class:list={[
+              'grid items-center gap-4 p-5 transition-colors hover:bg-subtle sm:grid-cols-[1fr_auto_auto_auto] sm:gap-6 sm:p-6',
+              'grid-line grid-line-b',
+            ]}
+          >
+            <div>
+              <p class="text-sm font-bold tracking-wide uppercase">{item.platform}</p>
+              <p class="tech-meta mt-1 opacity-60">
+                {item.filename}{item.fileSize ? ` · ${item.fileSize}` : ''}
+              </p>
+              <p class="tech-meta mt-2 max-w-md text-xs leading-relaxed opacity-60">
+                {item.archCaption}
+              </p>
+              <span class="tech-meta mt-2 inline-block border border-dark px-2 py-0.5 sm:mt-1">
+                Available now
+              </span>
+            </div>
+            <span class="tech-meta hidden sm:block">{item.arch}</span>
+            <span class="tech-meta hidden sm:block">{item.format}</span>
+            <a
+              href={item.link}
+              class="btn-editorial btn-editorial-primary w-full sm:w-auto"
+              download
+            >
+              Download
+              <ArrowRightIcon class="size-3" aria-hidden="true" />
+            </a>
+          </div>
+        ))
+      }
+
+      <div
+        class="grid-line grid-line-b grid items-center gap-4 p-5 opacity-60 sm:grid-cols-[1fr_auto_auto_auto] sm:gap-6 sm:p-6"
+        aria-disabled="true"
+      >
+        <div>
+          <p class="text-sm font-bold tracking-wide uppercase">Linux</p>
+          <p class="tech-meta mt-1">Linux support is arriving soon.</p>
+          <p class="tech-meta mt-1 opacity-60">Expected launch: 2–5 days</p>
+        </div>
+        <span class="tech-meta hidden border border-dark px-2 py-0.5 sm:block">Coming soon</span>
+        <span class="tech-meta hidden sm:block">—</span>
+        <span class="tech-meta hidden sm:block">—</span>
+        <span
+          class="btn-editorial w-full cursor-not-allowed opacity-50 sm:w-auto"
+          aria-hidden="true"
+        >
+          Coming soon
+        </span>
+      </div>
+    </div>
+
+    <p class="tech-meta mt-6 opacity-60">
+      Checksums available on the{' '}
+      <a
+        href="https://github.com/Hrishikeshmind/astradesktop/releases/latest"
+        class="astra-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub release page
+      </a>
+    </p>
+  </div>
+</section>

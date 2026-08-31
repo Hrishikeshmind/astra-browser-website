@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /.env/
+
+Sitemap: https://astra-browser.app/sitemap-0.xml

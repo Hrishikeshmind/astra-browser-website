@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="uBlock Origin">
+  <path
+    fill="#D40000"
+    d="M64 6 18 25v38c0 27.2 19.4 52.7 46 57.2 26.6-4.5 46-30 46-57.2V25L64 6Z"
+  />
+  <path
+    fill="#fff"
+    d="M64 34c-10.5 0-19 8.5-19 19v12h-8V53c0-14.9 12.1-27 27-27s27 12.1 27 27v12h-8V53c0-10.5-8.5-19-19-19Zm-19 35h38v8H45v-8Z"
+  />
+</svg>

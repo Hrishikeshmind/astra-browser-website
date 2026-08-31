@@ -1,0 +1,72 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<div class:list={['halftone-landscape pointer-events-none select-none', className]} aria-hidden="true">
+  <svg
+    viewBox="0 0 800 600"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-full w-full"
+    preserveAspectRatio="xMidYMax slice"
+  >
+    <defs>
+      <pattern id="halftone-dots" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+        <circle cx="3" cy="3" r="1.2" fill="currentColor" />
+      </pattern>
+      <pattern id="halftone-fine" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="0.8" fill="currentColor" />
+      </pattern>
+      <linearGradient id="mountain-fade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="currentColor" stop-opacity="0" />
+        <stop offset="40%" stop-color="currentColor" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="currentColor" stop-opacity="1" />
+      </linearGradient>
+      <mask id="mountain-mask">
+        <rect width="800" height="600" fill="url(#mountain-fade)" />
+      </mask>
+    </defs>
+
+    <!-- Background sky dots (sparse) -->
+    <rect width="800" height="600" fill="url(#halftone-dots)" opacity="0.08" />
+
+    <!-- Far mountains -->
+    <path
+      d="M0 420 L120 280 L240 350 L380 200 L520 320 L640 180 L800 300 L800 600 L0 600 Z"
+      fill="url(#halftone-dots)"
+      opacity="0.25"
+      mask="url(#mountain-mask)"
+    />
+
+    <!-- Mid mountains -->
+    <path
+      d="M0 480 L200 340 L350 400 L500 260 L650 380 L800 320 L800 600 L0 600 Z"
+      fill="url(#halftone-dots)"
+      opacity="0.45"
+    />
+
+    <!-- Near mountains (dense halftone) -->
+    <path
+      d="M0 520 L150 400 L300 460 L450 350 L600 440 L750 380 L800 420 L800 600 L0 600 Z"
+      fill="url(#halftone-fine)"
+      opacity="0.7"
+    />
+
+    <!-- Foreground ridge -->
+    <path
+      d="M0 560 L180 480 L360 520 L540 460 L720 500 L800 480 L800 600 L0 600 Z"
+      fill="url(#halftone-fine)"
+      opacity="0.95"
+    />
+  </svg>
+</div>
+
+<style>
+  .halftone-landscape {
+    color: var(--astra-dark);
+  }
+</style>

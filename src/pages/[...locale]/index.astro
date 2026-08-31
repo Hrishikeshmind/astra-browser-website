@@ -1,0 +1,22 @@
+---
+import DownloadSection from '~/components/DownloadSection.astro'
+import Features from '~/components/Features.astro'
+import GridDivider from '~/components/GridDivider.astro'
+import Hero from '~/components/Hero.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+---
+
+<Layout title={layout.index.title} description={layout.index.description} isHome>
+  <main>
+    <Hero />
+    <GridDivider />
+    <Features />
+    <GridDivider />
+    <DownloadSection />
+  </main>
+</Layout>

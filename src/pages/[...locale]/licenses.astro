@@ -1,0 +1,79 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const GITHUB_LICENSE = 'https://github.com/Hrishikeshmind/astradesktop/blob/main/LICENSE'
+const GITHUB_REPO = 'https://github.com/Hrishikeshmind/astradesktop'
+
+const sections = [
+  {
+    title: 'Astra Browser',
+    body: 'Astra Browser is free and open-source software distributed under the Mozilla Public License 2.0 (MPL-2.0). You may use, modify, and redistribute it in accordance with that license. The full license text is available in the repository.',
+  },
+  {
+    title: 'Firefox and Gecko',
+    body: 'Astra is built on Firefox technology and the Gecko engine. Mozilla’s code and trademarks are subject to their own licenses and policies. Astra is an independent project and is not affiliated with or endorsed by Mozilla.',
+  },
+  {
+    title: 'Third-party components',
+    body: 'Like other browsers, Astra includes open-source libraries and upstream components. Their licenses are bundled with the source tree. If you redistribute Astra or build from source, review those notices alongside the main LICENSE file.',
+  },
+  {
+    title: 'Website and mods',
+    body: 'Content on astra-browser.app (including downloadable mods hosted here) is provided for use with Astra. Mod files are static assets downloaded to your device — the site itself does not run analytics or tracking scripts.',
+  },
+]
+---
+
+<Layout title={layout.licenses.title} description={layout.licenses.description}>
+  <ContentPage
+    label="Legal"
+    title="Licenses"
+    description="Open-source licensing for Astra Browser and related materials."
+  >
+    <GridDivider />
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <p class="tech-meta mb-12 opacity-60">Last updated: August 2026</p>
+        <div class="max-w-3xl space-y-12">
+          {
+            sections.map((section, i) => (
+              <article>
+                <div class="mb-4 flex items-center gap-4">
+                  <span class="section-number">{String(i + 1).padStart(2, '0')}</span>
+                  <h2 class="text-xl font-bold tracking-tight uppercase lg:text-2xl">
+                    {section.title}
+                  </h2>
+                </div>
+                <p class="text-sm leading-relaxed text-gray">{section.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="text-sm leading-relaxed text-gray">
+          Read the full MPL-2.0 license text on{' '}
+          <a href={GITHUB_LICENSE} target="_blank" rel="noopener noreferrer" class="footer-link">
+            GitHub
+          </a>{' '}
+          or browse the{' '}
+          <a href={GITHUB_REPO} target="_blank" rel="noopener noreferrer" class="footer-link">
+            astradesktop repository
+          </a>{' '}
+          for source and bundled third-party notices.
+        </p>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

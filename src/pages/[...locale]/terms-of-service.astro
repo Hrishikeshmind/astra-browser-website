@@ -1,0 +1,86 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const sections = [
+  {
+    title: 'Acceptance of terms',
+    body: 'By downloading, installing, or using Astra Browser, you agree to these Terms of Service. If you do not agree, do not use the software.',
+  },
+  {
+    title: 'The software',
+    body: 'Astra Browser is free and open-source software maintained by Hrishikesh Gade. It is distributed under the Mozilla Public License 2.0 (MPL-2.0). You may use, modify, and distribute it in accordance with that license.',
+  },
+  {
+    title: 'No warranty',
+    body: 'Astra is provided "as is" without warranty of any kind, express or implied. There is no guarantee that the software will be error-free, secure, or uninterrupted. Use it at your own risk.',
+  },
+  {
+    title: 'Your responsibility',
+    body: 'You are responsible for your use of Astra and for complying with applicable laws. What you browse, download, or share using the browser is your responsibility.',
+  },
+  {
+    title: 'Third-party content and services',
+    body: 'Astra loads content from websites you choose to visit and may connect to third-party services (for example, add-on repositories or optional Firefox Sync if you enable it). The Astra project does not control third-party websites or services and is not responsible for their content or policies.',
+  },
+  {
+    title: 'Changes',
+    body: 'These terms may be updated from time to time. Continued use of Astra after changes are posted on this site constitutes acceptance of the updated terms.',
+  },
+]
+---
+
+<Layout title={layout.termsOfService.title} description={layout.termsOfService.description}>
+  <ContentPage
+    label="Legal"
+    title="Terms of Service"
+    description="The terms governing your use of Astra Browser."
+  >
+    <GridDivider />
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <p class="tech-meta mb-12 opacity-60">Last updated: August 2026</p>
+        <div class="max-w-3xl space-y-12">
+          {
+            sections.map((section, i) => (
+              <article>
+                <div class="mb-4 flex items-center gap-4">
+                  <span class="section-number">{String(i + 1).padStart(2, '0')}</span>
+                  <h2 class="text-xl font-bold tracking-tight uppercase lg:text-2xl">
+                    {section.title}
+                  </h2>
+                </div>
+                <p class="text-sm leading-relaxed text-gray">{section.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="text-sm leading-relaxed text-gray">
+          For privacy-related terms, see the{' '}
+          <a href="/privacy-policy" class="footer-link">Privacy Policy</a>. For license details,
+          see{' '}
+          <a
+            href="https://github.com/Hrishikeshmind/astradesktop/blob/main/LICENSE"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+          >
+            LICENSE on GitHub
+          </a>.
+        </p>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

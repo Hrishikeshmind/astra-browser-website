@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+  src?: ImageMetadata
+  alt: string
+  class?: string
+}
+
+const { src, alt, class: className } = Astro.props
+---
+
+<div class:list={['feature-visual w-full', className]}>
+  {
+    src ? (
+      <Image
+        src={src}
+        alt={alt}
+        class="grid-line grid-line-all h-auto w-full object-contain object-left-top"
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <div
+        class="grid-line grid-line-all flex aspect-[16/10] w-full items-center justify-center bg-subtle"
+        aria-hidden="true"
+      >
+        <span class="tech-meta opacity-40">Feature preview</span>
+      </div>
+    )
+  }
+</div>

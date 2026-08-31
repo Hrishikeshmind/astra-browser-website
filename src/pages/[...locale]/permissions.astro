@@ -1,0 +1,73 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import ContentPage from '~/components/ContentPage.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const GITHUB_URL = 'https://github.com/Hrishikeshmind/astradesktop'
+
+const sections = [
+  {
+    title: 'Minimal permissions by design',
+    body: 'Astra requests only the permissions needed to function as your browser — accessing websites, storing bookmarks and history locally, and managing downloads. It does not ask for access to unrelated system resources.',
+  },
+  {
+    title: 'Site permissions you control',
+    body: 'When a website requests access to your camera, microphone, location, or notifications, Astra shows a clear prompt. You can allow once, allow always, or block — and change your mind later in Settings → Privacy & Security → Permissions.',
+  },
+  {
+    title: 'Extension permissions',
+    body: 'If you install browser extensions, each one declares what it can access. Review extension permissions before installing, and remove any extension you no longer trust. Astra surfaces these requests so you are not granting access blindly.',
+  },
+  {
+    title: 'Open and auditable',
+    body: 'Because Astra is open source, you can inspect exactly what the browser does and what permissions it uses. The full source code is available on GitHub for anyone to review.',
+  },
+]
+---
+
+<Layout title={layout.permissions.title} description={layout.permissions.description}>
+  <ContentPage
+    label="Security"
+    title="Permissions"
+    description="How Astra handles site access, system permissions, and what you can control."
+  >
+    <GridDivider />
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <div class="max-w-3xl space-y-12">
+          {
+            sections.map((section, i) => (
+              <article>
+                <div class="mb-4 flex items-center gap-4">
+                  <span class="section-number">{String(i + 1).padStart(2, '0')}</span>
+                  <h2 class="text-xl font-bold tracking-tight uppercase lg:text-2xl">
+                    {section.title}
+                  </h2>
+                </div>
+                <p class="text-sm leading-relaxed text-gray">{section.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <GridDivider />
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="text-sm leading-relaxed text-gray">
+          To review or change permissions, open Astra Settings → Privacy & Security. For the full
+          source code, visit the{' '}
+          <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" class="footer-link">
+            Astra GitHub repository
+          </a>.
+        </p>
+      </div>
+    </section>
+  </ContentPage>
+</Layout>

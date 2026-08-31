@@ -1,0 +1,159 @@
+---
+import { icon, library } from '@fortawesome/fontawesome-svg-core'
+import { faLinux, faWindows } from '@fortawesome/free-brands-svg-icons'
+import { Image } from 'astro:assets'
+import HalftoneLandscape from '~/components/HalftoneLandscape.astro'
+import astraBrowserUi from '~/assets/screenshots/astra-browser-ui.png'
+import ArrowRightIcon from '~/icons/ArrowRightIcon.astro'
+import { getReleases } from '~/components/download/release-data'
+import { formatReleaseVersion, getLatestRelease } from '~/utils/githubReleases'
+import { getLocale, getPath } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const getLocalePath = getPath(locale)
+const releases = getReleases(locale)
+
+library.add(faWindows, faLinux)
+const windowsIcon = icon({ prefix: 'fab', iconName: 'windows' })
+const linuxIcon = icon({ prefix: 'fab', iconName: 'linux' })
+
+let latestVersion = '1.21.4b'
+try {
+  const release = await getLatestRelease()
+  latestVersion = formatReleaseVersion(release.tag_name)
+} catch {
+  // Fall back to hardcoded version if GitHub API is unavailable.
+}
+
+const windowsDownloads = [
+  {
+    id: 'windows-x64',
+    name: 'Astra for Windows',
+    arch: 'Windows x86_64',
+    archCaption: 'Recommended for most Windows PCs (Intel/AMD processors)',
+    format: 'Installer',
+    icon: windowsIcon.html,
+    link: releases.windows.x86_64.link,
+  },
+  {
+    id: 'windows-arm64',
+    name: 'Astra for Windows',
+    arch: 'ARM64',
+    archCaption:
+      'Only for Windows-on-ARM devices (e.g. Surface Pro X, Snapdragon-based laptops). Not sure? Check Settings → System → About → System type on your PC — if it says "x64-based processor", use the option above instead.',
+    format: 'Installer',
+    icon: windowsIcon.html,
+    link: releases.windows.arm64.link,
+  },
+]
+---
+
+<section id="hero" class="grid-line grid-line-b relative overflow-hidden">
+  <div class="container grid lg:grid-cols-2 lg:gap-0">
+    <!-- Left: Content -->
+    <div class="grid-line grid-line-r flex flex-col justify-center py-12 lg:py-20 lg:pr-12 xl:pr-16">
+      <p class="section-label mb-6">v{latestVersion} · Engineered in India</p>
+
+      <h1 class="editorial-headline mb-4">
+        Download<br />Astra Browser
+      </h1>
+
+      <p class="editorial-subhead mb-2 font-medium">Fast. Secure. Indian.</p>
+      <p class="tech-meta mb-6 opacity-60">Windows · Available now</p>
+
+      <p class="mb-8 max-w-md text-sm leading-relaxed text-gray">
+        Astra Browser is a privacy-first browser built for a faster, safer and more focused web
+        experience.
+      </p>
+
+      <!-- Primary Windows CTA -->
+      <div class="mb-6">
+        <a
+          href={releases.windows.x86_64.link}
+          class="btn-editorial btn-editorial-primary w-full sm:w-auto"
+          download
+        >
+          Download Astra for Windows
+          <ArrowRightIcon class="size-3" aria-hidden="true" />
+        </a>
+        <p class="tech-meta mt-3 opacity-60">Windows x86_64 · Installer</p>
+      </div>
+
+      <!-- Windows download cards -->
+      <div class="mb-4 grid gap-px bg-border sm:grid-cols-2">
+        {
+          windowsDownloads.map(platform => (
+            <div class="download-card bg-paper p-5">
+              <div class="mb-4">
+                <div class="mb-2 flex items-center gap-2">
+                  <span class="flex size-8 items-center justify-center border border-dark">
+                    <Fragment set:html={platform.icon} />
+                  </span>
+                  <span class="text-sm font-bold tracking-wide uppercase">{platform.name}</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="tech-meta border border-dark px-2 py-0.5">Available now</span>
+                  <p class="tech-meta">{platform.arch} · {platform.format}</p>
+                </div>
+                <p class="tech-meta mt-2 text-xs leading-relaxed opacity-60">
+                  {platform.archCaption}
+                </p>
+              </div>
+              <a href={platform.link} class="btn-editorial btn-editorial-primary w-full" download>
+                Download
+                <ArrowRightIcon class="size-3" aria-hidden="true" />
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Linux coming soon -->
+      <div
+        class="download-card bg-paper pointer-events-none mb-6 p-5 opacity-60"
+        aria-disabled="true"
+      >
+        <div class="mb-2 flex items-center gap-2">
+          <span class="flex size-8 items-center justify-center border border-dark opacity-50">
+            <Fragment set:html={linuxIcon.html} />
+          </span>
+          <span class="text-sm font-bold tracking-wide uppercase">Linux</span>
+          <span class="tech-meta border border-dark px-2 py-0.5 opacity-80">Coming soon</span>
+        </div>
+        <p class="mb-1 text-sm leading-relaxed text-gray">Linux support is arriving soon.</p>
+        <p class="tech-meta opacity-60">Expected launch: 2–5 days</p>
+      </div>
+
+      <a
+        href={getLocalePath('/download')}
+        class="tech-meta inline-flex items-center gap-2 no-underline transition-opacity hover:opacity-60"
+      >
+        View all downloads
+        <ArrowRightIcon class="size-3" aria-hidden="true" />
+      </a>
+    </div>
+
+    <!-- Right: Browser mockup + halftone -->
+    <div class="relative flex items-end justify-center py-8 lg:py-12 lg:pl-8">
+      <div class="absolute inset-0 overflow-hidden">
+        <HalftoneLandscape class="halftone-overlay absolute inset-x-0 bottom-0 h-[85%] text-dark" />
+      </div>
+      <div class="relative z-10 w-full max-w-lg lg:max-w-xl">
+        <Image
+          src={astraBrowserUi}
+          alt="Astra Browser interface"
+          class="grid-line grid-line-all h-auto w-full object-contain"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .download-card .svg-inline--fa {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

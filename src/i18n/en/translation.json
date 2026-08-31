@@ -1,0 +1,563 @@
+{
+  "routes": {
+    "index": {
+      "title": "Astra Browser",
+      "hero": {
+        "title": [
+          { "text": "welcome ", "highlight": false },
+          { "text": "to ", "highlight": false },
+          { "text": "\n", "highlight": false },
+          { "text": "a ", "highlight": false },
+          { "text": "calmer ", "highlight": true },
+          { "text": "internet", "highlight": false }
+        ],
+        "description": [
+          "Beautifully designed, privacy-focused, and packed with features.",
+          "We care about your experience, not your data."
+        ],
+        "buttons": {
+          "beta": "Beta is now available!",
+          "support": "Support Us ❤️"
+        }
+      },
+      "features": {
+        "titles": ["Productivity ", "at ", "its best"],
+        "description": "Astra is packed with features that help you stay productive and focused. Browsers should be tools that help you get things done, not distractions that keep you from your work.",
+        "featureTabs": {
+          "workspaces": {
+            "title": "Workspaces",
+            "description": "Organize your tabs into Workspaces to keep your projects separate and organized, and switch between them with ease."
+          },
+          "compactMode": {
+            "title": "Compact Mode",
+            "description": "Astra's Compact Mode gives you more screen real estate by hiding the tab bar when you don't need it, and showing it when you do."
+          },
+          "glance": {
+            "title": "Glance",
+            "description": "Glance allows you to quickly switch between your most used tabs, without having to scroll through your history."
+          },
+          "splitView": {
+            "title": "Split View",
+            "description": "Split View allows you to view two tabs side by side, making it easier to compare and switch between them."
+          }
+        }
+      },
+      "sponsors": {
+        "title": "Our Sponsors",
+        "description": "We are grateful to our sponsors for their support. They help us to keep the project alive.<br />You can also be part of this journey by <a href=\"/donate\" class=\"astra-link\">donating to us directly</a>!",
+        "sponsors": {
+          "tuta": {
+            "name": "Tuta",
+            "url": "https://tuta.com/"
+          },
+          "blacksmith": {
+            "name": "BlackSmith",
+            "url": "https://www.blacksmith.sh/"
+          },
+          "crowdin": {
+            "name": "Crowdin",
+            "url": "https://crowdin.com/"
+          }
+        }
+      },
+      "community": {
+        "title": ["Our ", "Core ", "Values"],
+        "description": "We make it not only a priority, but a necessity to ensure that Astra always strikes the right balance between beauty, performance, and privacy.",
+        "lists": {
+          "freeAndOpenSource": {
+            "title": "Free and open-source",
+            "description": "Astra is free and open-source software, which means you can use it without any cost and can modify it to suit your needs."
+          },
+          "simpleYetPowerful": {
+            "title": "Simple yet powerful",
+            "description": "Astra is simple to use, but powerful enough to handle your daily tasks."
+          },
+          "privateAndAlwaysUpToDate": {
+            "title": "Private and always up-to-date",
+            "description": "Astra is private and always up-to-date, which means you can use it without any cost and can modify it to suit your needs."
+          }
+        },
+        "images": {
+          "community": {
+            "alt": "Community"
+          }
+        }
+      }
+    },
+    "mods": {
+      "title": "Astra Mods",
+      "description": "Browse our diverse collection of Astra Mods, community-made plugins and themes for Astra Browser. Discover a theme to match every mood, and a plugin to fulfill every requirement. Start customizing your browser experience today!",
+      "pagination": {
+        "pagination": "{input} of {totalPages} ({totalItems} items)"
+      },
+      "search": "Type to search...",
+      "by": "by",
+      "sort": {
+        "lastCreated": "Last created",
+        "lastUpdated": "Last updated",
+        "perPage": "Per page"
+      },
+      "noResults": "No results found",
+      "noResultsDescription": "Try searching for a different term or check back later.",
+      "slug": {
+        "title": "{name} - Astra Mods",
+        "description": "Learn more about {name} mod available on Astra Browser",
+        "alert": {
+          "description": "You need to have Astra Browser installed to install this theme.",
+          "button": "Download now!"
+        },
+        "createdBy": "Created by {author} • <b>v{version}</b>",
+        "creationDate": "Creation date: <b>{createdAt}</b>",
+        "latestUpdate": "Latest update: <b>{updatedAt}</b>",
+        "visitModHomepage": "Visit mod homepage",
+        "installMod": "Install Mod 🎉",
+        "uninstallMod": "Uninstall Mod",
+        "back": "Back"
+      }
+    },
+    "releaseNotes": {
+      "topSection": {
+        "title": "Changelog",
+        "description": "Stay up to date with the latest changes to Astra! Since the <a class=\"astra-link\" href=\"#1.0.0-a.1\">first release</a> till <a class=\"astra-link\" href=\"#{latestVersion}\">{latestVersion}</a>, we've been working hard to make Astra Browser the best it can be. Thanks everyone for your feedback! ❤️"
+      },
+      "list": {
+        "support": "Give us some support!",
+        "navigateToVersion": "Navigate to version..."
+      },
+      "itemType": {
+        "fix": "Fixed",
+        "feature": "Added",
+        "known": "Known",
+        "break": "Breaking",
+        "theme": "Theme",
+        "security": "Security",
+        "change": "Change"
+      },
+      "backToTop": "Back to the top",
+      "chooseVersion": "Choose version",
+      "components": {
+        "releaseNoteItem": {
+          "twilight": "Twilight",
+          "twilightChanges": "Twilight changes",
+          "releaseChanges": "v{version}",
+          "firefoxVersion": "Firefox {version}",
+          "githubRelease": "GitHub Release",
+          "workflowRun": "Workflow run",
+          "compareChanges": "Compare changes",
+          "twilightWarning": "Please note that Twilight is a pre-release version of Astra Browser. It may contain bugs and unfinished features.",
+          "reportIssues": " If you encounter any issues, please report them on <a rel=\"noopener noreferrer\" target=\"_blank\" href=\"https://github.com/Hrishikeshmind/astradesktop/issues/\" class=\"astra-link\">the issues page</a>.",
+          "learnMore": "Learn more",
+          "viewIssue": "View issue number {issue} on GitHub"
+        }
+      },
+      "slug": {
+        "title": "Release notes",
+        "redirect": "Redirecting to release notes for version {version}..."
+      }
+    },
+    "about": {
+      "title": "About Astra",
+      "description": "We are simply a group of developers and designers who care about your experience on the web. We believe that the internet should be a place where you can explore, learn, and connect without worrying about your data being collected.",
+      "littleHelp": "A little help?",
+      "mainTeam": {
+        "title": "Main Team",
+        "description": "This list shows the main team members who are working hard to bring you the best browsing experience.",
+        "subTitle": {
+          "browser": "Browser",
+          "website": "Website and Branding"
+        },
+        "members": {
+          "browser": {
+            "mauro": {
+              "name": "Mauro V.",
+              "description": "Creator, Main Developer",
+              "link": "https://cheff.dev/"
+            },
+            "jan": {
+              "name": "Jan Heres",
+              "description": "Active contributor and helps with MacOS builds",
+              "link": "https://janheres.eu/"
+            },
+            "bryan": {
+              "name": "Bryan Galdámez",
+              "description": "Huge contributor on theme functionalities",
+              "link": "https://josuegalre.netlify.app/"
+            },
+            "oscar": {
+              "name": "Oscar Gonzalez",
+              "description": "Site Reliability Engineer (SRE) and code signing.",
+              "link": false
+            },
+            "daniel": {
+              "name": "Daniel García",
+              "description": "MacOS certificate and app notarization maintainer",
+              "link": false
+            },
+            "brhm": {
+              "name": "BrhmDev",
+              "description": "Active contributor with great contributions",
+              "link": "https://github.com/BrhmDev"
+            },
+            "kristijanribaric": {
+              "name": "Kristijan Ribaric",
+              "description": "Active contributor with split views / workspaces",
+              "link": "https://github.com/kristijanribaric"
+            },
+            "larvey": {
+              "name": "Larvey",
+              "description": "AUR maintainer",
+              "link": "https://github.com/LarveyOfficial/"
+            },
+            "studio": {
+              "name": "Studio Movie Girl",
+              "description": "Big contributor with the gradient generator",
+              "link": "https://github.com/neurokitti"
+            }
+          },
+          "website": {
+            "taroj1205": {
+              "name": "Shintaro Jokagi",
+              "description": "Core Website Architect, Spearheading Refactoring and Technical Enhancements",
+              "link": "https://github.com/taroj1205"
+            },
+            "jace": {
+              "name": "Jace",
+              "description": "Contributes to website design and branding",
+              "link": "https://x.com/JaceThings"
+            },
+            "canoa": {
+              "name": "Canoa",
+              "description": "Active contributor, and very active in issue handling and website management",
+              "link": "https://thatcanoa.org/"
+            },
+            "adam": {
+              "name": "Adam",
+              "description": "Branding and design",
+              "link": "https://cybrneon.xyz/"
+            },
+            "n7itro": {
+              "name": "n7itro",
+              "description": "Active contributor and release notes writer",
+              "link": "https://github.com/n7itro"
+            },
+            "jafeth": {
+              "name": "Jafeth Garro",
+              "description": "Documentation writer",
+              "link": "https://iamjafeth.com/"
+            }
+          }
+        }
+      },
+      "contributors": {
+        "title": "Contributors",
+        "description": "This list shows the contributors who have helped us to make Astra Browser the best it can be.",
+        "browser": "Browser",
+        "website": "Website"
+      }
+    },
+    "donate": {
+      "title": "Donate",
+      "description": "We are a small team of developers working hard to bring you the best browsing experience. If you like what we do, please consider supporting us.",
+      "patreon": {
+        "title": "Patreon",
+        "description": "Patreon allows you to support us with a monthly donation. You can choose the level of support that works best for you.",
+        "button": "Go to Patreon"
+      },
+      "koFi": {
+        "title": "Ko-fi",
+        "description": "Ko-fi allows you to support us with a one-time donation. You can choose the amount that works best for you. Monthly donations are also available.",
+        "button": "Go to Ko-fi"
+      }
+    },
+    "download": {
+      "title": "Start your journey",
+      "description": "Download Astra for Windows and experience a more mindful internet browsing experience.<br/>Linux support is arriving soon.",
+      "twilightInfo": "You're currently in Twilight mode, this means you're downloading the latest experimental features and updates.",
+      "beta": "Astra is currently in ",
+      "otherDownload": "If your device has been wrongly detected, <a href='https://github.com/Hrishikeshmind/astradesktop/releases/latest/' class='astra-link'>see other downloads</a>.<br />Please report any issues you encounter on <a href='https://github.com/Hrishikeshmind/astradesktop/issues/new/choose' class='astra-link ml-[1px]'>GitHub</a>.",
+      "alertInfo": {
+        "description": "You're currently in Twilight mode, this means you're downloading the latest experimental features and updates."
+      },
+      "platformSelector": {
+        "title": "Platform Selector",
+        "description": "Select your platform to download Astra."
+      },
+      "additionalResources": {
+        "title": "Additional Resources",
+        "sourceCode": {
+          "title": "Source Code",
+          "description": "Explore Astra's source code on GitHub. Contribute to the project or build your own version."
+        },
+        "documentation": {
+          "title": "Documentation",
+          "description": "Access comprehensive documentation, guides, and tutorials for Astra."
+        }
+      },
+      "securityNotice": {
+        "title": "Verified & Secure Downloads",
+        "description": "All Astra downloads are signed and verified for your security. We recommend downloading directly from our official website or GitHub repository. If your download seems broken or gets flagged by your antivirus, please <a href='https://github.com/Hrishikeshmind/astradesktop/issues/new/choose' class='astra-link ml-1'>report it to us</a>."
+      },
+      "platformNames": {
+        "mac": "macOS",
+        "windows": "Windows",
+        "linux": "Linux"
+      },
+      "platformDescriptions": {
+        "mac": "Works on both new Apple (M-Series) and older Intel Macs.<br />Requires macOS 11.0 or later.",
+        "windows": "Works on Windows 10 and Windows 11.<br />Not sure which version to get? Most people should choose the 64-bit installer.",
+        "linux": "Works with many Linux versions.<br />Pick the download that matches your system."
+      },
+      "links": {
+        "macos": { "universal": "Universal" },
+        "windows": { "64bit": "64-bit (Recommended)", "ARM64": "ARM64" },
+        "linux": {
+          "flathub": "Flathub",
+          "x86_64": "Tarball",
+          "aarch64": "Tarball"
+        }
+      },
+      "buttonCard": {
+        "copy": "Copy",
+        "showChecksum": "Show SHA-256",
+        "beta": "Beta"
+      }
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated: August 2026",
+      "sections": {
+        "introduction": {
+          "title": "Introduction",
+          "body": "Astra Browser is built around privacy and local control. This Privacy Policy explains what data stays on your device, what optional services you may choose to use, and what the Astra project does not collect.",
+          "summary": "No Astra telemetry — No Astra cloud sync — Your browsing data stays on your device"
+        },
+        "noCollect": {
+          "title": "1. What Astra Does Not Collect",
+          "body": "The Astra project does not operate a telemetry pipeline, analytics service, or cloud sync backend. We do not receive your browsing history, search queries, bookmarks, passwords, or other personal data from your use of Astra Browser."
+        },
+        "noTelemetry": {
+          "title": "1.1. No Astra Telemetry",
+          "body": "Astra removes Mozilla Firefox telemetry and crash reporting that would send data to Mozilla by default. The Astra team does not collect usage statistics, crash dumps, or diagnostic reports from your browser.",
+          "body2": "If you choose to send feedback through GitHub, email, or Discord, you control what you share in those messages."
+        },
+        "noPersonalData": {
+          "title": "1.2. No Personal Data Collection by Astra",
+          "body": "Astra does not collect personal information such as your IP address, browsing history, search queries, or form data. Anything you browse or type stays on your device unless you explicitly use a third-party feature described below."
+        },
+        "noThirdParty": {
+          "title": "1.3. No Third-Party Tracking by Astra",
+          "body": "Astra does not embed third-party analytics or advertising trackers. Tracking protection features help limit cross-site tracking by websites you visit, but individual sites may still set cookies or request data according to their own policies."
+        },
+        "externalConnections": {
+          "title": "1.4. Connections the Browser May Make",
+          "body": "Like other browsers, Astra may connect to the internet to check for updates, verify add-on updates, load web pages you request, and support standard web features (for example, push notifications or geolocation when a site asks and you allow it). These connections serve the page or feature you requested — they are not an Astra telemetry pipeline. Advanced users can review and adjust many network-related settings in about:config."
+        },
+        "localStorage": {
+          "title": "2. Information Stored Locally on Your Device"
+        },
+        "browsingData": {
+          "title": "2.1. Browsing Data",
+          "body": "Astra stores certain data locally on your device to enhance your browsing experience. This includes:"
+        },
+        "cookies": {
+          "title": "Cookies",
+          "body": "Cookies are stored locally on your device and are not shared with Astra or any third party. You have full control over the management of cookies through the browser's settings."
+        },
+        "cache": {
+          "title": "Cache and Temporary Files",
+          "body": "Astra may store cache files and other temporary data locally to improve performance. These files can be cleared at any time through the browser's settings."
+        },
+        "settings": {
+          "title": "2.2. Settings and Preferences",
+          "body": "Any customizations, settings, and preferences you make within Astra are stored locally on your device. We do not have access to or control over this data."
+        },
+        "sync": {
+          "title": "3. Optional Firefox Sync",
+          "body": "Astra does not provide its own cloud sync service. If you choose to enable Mozilla Firefox Sync, your encrypted data is handled by Mozilla’s infrastructure under their privacy policy — not by Astra. Astra cannot read synced data. Local Auto-Backup stores copies on your device only and does not upload them to Astra.",
+          "link1": "Mozilla Firefox Sync",
+          "link2": "How Firefox stores passwords"
+        },
+        "addons": {
+          "title": "4. Add-ons and Mods",
+          "body": "You can install add-ons from addons.mozilla.org; Astra checks for add-on updates through Mozilla’s systems when you use that feature.\nYou can also install Mods from astra-browser.app/mods. Mod files are static content downloaded to your device. This website does not use analytics or tracking scripts when you download mods."
+        },
+        "security": {
+          "title": "5. Data on Your Device",
+          "body": "Bookmarks, history, settings, and backups created by Astra are stored locally on your device. We recommend using device encryption, strong passwords, and keeping your software up to date.",
+          "note": "Core security mechanisms inherit from the Firefox/Gecko codebase; see Mozilla’s documentation for engine-level details."
+        },
+        "control": {
+          "title": "6. Your Control",
+          "deletionTitle": "6.1. Data Deletion",
+          "deletionBody": "You have full control over all data stored locally on your device by Astra. You can clear your browsing data, cookies, and cache at any time using the browser's settings."
+        },
+        "website": {
+          "title": "7. This Website",
+          "body": "The astra-browser.app website is a static site. We do not run third-party analytics, advertising trackers, or Astra-owned telemetry on this site. Basic hosting infrastructure (for example, Cloudflare) may process HTTP requests for security and delivery; that processing is not linked to your Astra Browser usage.",
+          "externalLinksTitle": "7.1. External links",
+          "externalLinksBody": "This site and Astra may link to external services such as GitHub or Discord. Those services have their own privacy policies. Review them before sharing personal information there."
+        },
+        "changes": {
+          "title": "8. Changes to This Privacy Policy",
+          "body": "We may update this Privacy Policy when practices or legal requirements change. The date at the top of this page shows when it was last revised. Continued use of Astra after updates means you accept the revised policy."
+        },
+        "otherTelemetry": {
+          "title": "9. Upstream Firefox Code",
+          "body": "Astra builds on Firefox. We disable telemetry where possible, but upstream code may still contain optional network features. For Mozilla’s own data practices, see:",
+          "firefoxPrivacyNotice": "Firefox Privacy Notice",
+          "forMoreInformation": "for more information."
+        },
+        "contact": {
+          "title": "10. Contact",
+          "body": "Questions about this Privacy Policy or Astra Browser? Reach us at:",
+          "email": "Email: ",
+          "emailLink": "astrabrowserdev@gmail.com",
+          "github": "GitHub: ",
+          "githubLink": "Hrishikeshmind"
+        }
+      }
+    },
+    "welcome": {
+      "title": ["Welcome ", "to ", "Astra!"]
+    },
+    "whatsNew": {
+      "title": "What's New in {latestVersion.version}!",
+      "reportIssue": "Report an issue",
+      "joinDiscord": "Join our Discord",
+      "readFullReleaseNotes": "Read the full release notes"
+    },
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "Sorry, the page you are looking for does not exist or has been moved.",
+      "button": "Go Home"
+    }
+  },
+  "layout": {
+    "index": {
+      "title": "Astra Browser",
+      "description": "Beautifully designed, privacy-focused, and packed with features."
+    },
+    "mods": {
+      "title": "Astra Mods",
+      "description": "Browse our diverse collection of Astra Mods, community-made plugins and themes for Astra. Discover a theme to match every mood, and a plugin to fulfill every requirement. Start customizing your browser experience today!"
+    },
+    "releaseNotes": {
+      "title": "Release notes - Astra",
+      "description": "Stay up to date with the latest changes to Astra! Since the first release till {latestVersion}, we've been working hard to make Astra the best it can be. Thanks everyone for your feedback! ❤️"
+    },
+    "about": {
+      "title": "About Astra",
+      "description": "Astra Browser is a privacy-first, open-source browser built in India by Hrishikesh Gade — designed for user control, not data collection."
+    },
+    "donate": {
+      "title": "Donate - Astra",
+      "description": "We are a small team of developers working hard to bring you the best browsing experience. If you like what we do, please consider supporting us."
+    },
+    "download": {
+      "title": "Download - Astra",
+      "description": "Download Astra for your platform and experience a more mindful internet browsing experience."
+    },
+    "developers": {
+      "title": "The Developer Behind Astra | Astra Browser",
+      "description": "Meet Hrishikesh Gade, the solo developer and final-year engineering student building Astra Browser in India."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy - Astra",
+      "description": "Your privacy is our priority. This Privacy Policy outlines the types of personal information we collect, how we use it, and the steps we take to protect your data when you use Astra."
+    },
+    "welcome": {
+      "title": "Welcome!",
+      "description": "Welcome to Astra!"
+    },
+    "whatsNew": {
+      "title": "What's New in {latestVersion.version}!"
+    },
+    "community": {
+      "title": "Community - Astra",
+      "description": "Connect with the Astra community on GitHub Discussions, Issues, Discord, and Releases."
+    },
+    "features": {
+      "title": "Features - Astra",
+      "description": "Explore Astra Browser's core features — Compact Mode, Local Auto-Backup, Boost, AI Sidebar, ad blocking, and more."
+    },
+    "adBlocking": {
+      "title": "Ad Blocking - Astra",
+      "description": "Astra includes a pre-installed ad and content blocker for cleaner browsing without extra extensions."
+    },
+    "trackingProtection": {
+      "title": "Tracking Protection - Astra",
+      "description": "How Astra limits third-party tracking and keeps your browsing data on your device."
+    },
+    "permissions": {
+      "title": "Permissions - Astra",
+      "description": "How Astra handles site permissions, extension access, and what you can control."
+    },
+    "termsOfService": {
+      "title": "Terms of Service - Astra",
+      "description": "Terms governing your use of Astra Browser."
+    },
+    "cookiePolicy": {
+      "title": "Cookie Policy - Astra",
+      "description": "How Astra Browser handles cookies and site storage."
+    },
+    "roadmap": {
+      "title": "Roadmap - Astra",
+      "description": "What the Astra team is working on next — coming soon, in progress, and planned."
+    },
+    "contact": {
+      "title": "Contact - Astra",
+      "description": "Get in touch with the Astra Browser team via GitHub or email."
+    },
+    "licenses": {
+      "title": "Licenses - Astra",
+      "description": "Open-source licensing for Astra Browser and related materials."
+    }
+  },
+  "components": {
+    "footer": {
+      "title": "Astra Browser",
+      "description": "Beautifully designed, privacy-focused, and packed with features. We care about your experience, not your data.",
+      "download": "Download",
+      "followUs": "Follow Us",
+      "aboutUs": "About Us",
+      "teamAndContributors": "Team & Contributors",
+      "privacyPolicy": "Privacy Policy",
+      "getStarted": "Get Started",
+      "documentation": "Documentation",
+      "zenMods": "Astra Mods",
+      "releaseNotes": "Release Notes",
+      "getHelp": "Get Help",
+      "securtiy": "Security",
+      "discord": "Discord",
+      "uptimeStatus": "Uptime Status",
+      "reportAnIssue": "Report an Issue",
+      "twilight": "Twilight",
+      "madeWith": "Made with <span aria-label='love'>❤️</span> by the <a href='{link}' class='astra-link inline-block font-bold'>Astra Team</a>"
+    },
+    "nav": {
+      "brand": "Astra Browser",
+      "menu": {
+        "gettingStarted": "Getting Started",
+        "usefulLinks": "Useful Links",
+        "mods": "Mods",
+        "download": "Download",
+        "discord": "Discord",
+        "releaseNotes": "Release Notes",
+        "zenMods": "Astra Mods",
+        "tryAstraMods": "Try Astra Mods",
+        "zenModsDesc": "Customize your browsing experience with Astra Mods.",
+        "releaseNotesDesc": "Stay up to date with the latest features and improvements.",
+        "discordDesc": "Join our community on Discord to chat with other Astra users!",
+        "donate": "Donate ❤️",
+        "donateDesc": "Support the development of Astra with a donation.",
+        "aboutUs": "About Us 🌟",
+        "aboutUsDesc": "Learn more about the team behind Astra.",
+        "documentation": "Documentation",
+        "documentationDesc": "Learn how to use Astra with our documentation.",
+        "github": "GitHub",
+        "githubDesc": "Contribute to the development of Astra on GitHub.",
+        "menu": "Menu"
+      }
+    }
+  }
+}

@@ -1,0 +1,181 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import Logo from '~/components/Logo.astro'
+import Layout from '~/layouts/Layout.astro'
+import { getLocale, getUI } from '~/utils/i18n'
+
+export { getStaticPaths } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const { layout } = getUI(locale)
+
+const GITHUB_URL = 'https://github.com/Hrishikeshmind/astradesktop'
+
+const manifestoItems = [
+  {
+    title: 'Privacy by Default',
+    body: 'Your browsing experience should not require giving up unnecessary data.',
+  },
+  {
+    title: 'User Control',
+    body: 'Your browser should adapt to you — not the other way around.',
+  },
+  {
+    title: 'Open Source',
+    body: 'Technology should be inspectable, understandable and improvable.',
+  },
+  {
+    title: 'India First',
+    body: "Built with India's users, languages and needs in mind.",
+  },
+  {
+    title: 'Built with Purpose',
+    body: 'Every feature should have a reason to exist.',
+  },
+]
+---
+
+<Layout title={layout.about.title} description={layout.about.description}>
+  <main>
+    <section class="grid-line grid-line-b">
+      <div class="container grid gap-12 py-16 lg:grid-cols-[1fr_auto] lg:gap-16 lg:py-24">
+        <div>
+          <p class="section-label mb-4">About</p>
+          <h1 class="editorial-headline mb-8 text-4xl lg:text-5xl">About Astra</h1>
+          <p class="max-w-xl text-sm leading-relaxed text-gray">
+            Astra Browser is a privacy-first browser built in India for a faster, safer and more
+            focused web. It is independently developed, open source, and built on Firefox
+            technology — evolved from Zen Browser, with a focus on user control over data
+            collection.
+          </p>
+        </div>
+        <div
+          class="grid-line grid-line-all flex items-center justify-center self-start p-8 lg:p-10"
+          aria-hidden="true"
+        >
+          <Logo class="size-20 opacity-90 lg:size-24" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <article class="max-w-3xl">
+          <div class="mb-6 flex items-center gap-4">
+            <span class="section-number">01</span>
+            <span class="section-label">Origin</span>
+          </div>
+          <h2 class="mb-8 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+            Why Astra exists
+          </h2>
+          <div class="space-y-5 text-sm leading-relaxed text-gray">
+            <p>
+              Astra started from a simple belief: the browser should belong to the person using it.
+              A browser is where we read, work, learn, and explore every day — it should feel
+              intentional, private, and customizable, not built for data collection or engagement
+              metrics.
+            </p>
+            <p>
+              I did not start Astra because the world needed another browser. I started it because I
+              wanted to understand what a browser could become when it is built around the user.
+            </p>
+            <p>
+              Astra is being built in India, for people in India and for users everywhere. India's
+              technology ecosystem is growing rapidly — millions of people are coming online with
+              diverse languages, scripts, and needs that deserve software built with them in mind.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <article>
+          <div class="mb-6 flex items-center gap-4">
+            <span class="section-number">02</span>
+            <span class="section-label">Technology</span>
+          </div>
+          <h2 class="mb-8 text-3xl font-bold tracking-tight uppercase lg:text-4xl">
+            Built on open foundations
+          </h2>
+          <div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
+            <div class="space-y-5 text-sm leading-relaxed text-gray">
+              <p>
+                Astra is built on Firefox technology and evolved from the Zen Browser codebase. It
+                uses the mature Gecko engine — not because of a partnership, but because this
+                foundation offers extensibility, a privacy-oriented philosophy, and real user control.
+              </p>
+              <p>
+                The project is maintained by Hrishikesh Gade, a solo developer — with
+                contributions from the open-source community on GitHub.
+              </p>
+            </div>
+            <div class="grid-line grid-line-all p-6 lg:p-8">
+              <p class="section-label mb-4">Foundation</p>
+              <ul class="space-y-3 text-sm leading-relaxed text-gray">
+                <li>Mature browser engine technology (Gecko / Firefox)</li>
+                <li>Open-source ecosystem and extensibility</li>
+                <li>Privacy-oriented development philosophy</li>
+                <li>User control over the browsing experience</li>
+              </ul>
+              <p class="tech-meta mt-6 opacity-60">
+                Astra is not affiliated with or endorsed by Mozilla or Zen Browser.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <section class="grid-line grid-line-b">
+      <div class="container py-16 lg:py-20">
+        <div class="mb-10 flex items-center gap-4">
+          <span class="section-number">03</span>
+          <span class="section-label">Principles</span>
+        </div>
+        <h2 class="mb-12 text-3xl font-bold tracking-tight uppercase lg:text-4xl">What we stand for</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            manifestoItems.map(item => (
+              <article class="grid-line grid-line-all p-6">
+                <h3 class="mb-3 text-sm font-bold tracking-tight uppercase">{item.title}</h3>
+                <p class="text-sm leading-relaxed text-gray">{item.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <GridDivider />
+
+    <section>
+      <div class="container py-16 lg:py-20">
+        <p class="mb-6 text-sm leading-relaxed text-gray">
+          Because I believe good software is worth building. Because India can build technology for
+          the world.
+        </p>
+        <p class="tech-meta mb-8">— Hrishikesh Gade</p>
+        <div class="flex flex-wrap gap-6">
+          <a href="/developers" class="footer-link text-sm font-medium">Meet the developer →</a>
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link text-sm font-medium"
+          >
+            View on GitHub →
+          </a>
+          <a href="/donate" class="footer-link text-sm font-medium">Support the project →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

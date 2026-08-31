@@ -1,0 +1,199 @@
+---
+import GridDivider from '~/components/GridDivider.astro'
+import Logo from '~/components/Logo.astro'
+import SocialMediaStrip from '~/components/SocialMediaStrip.astro'
+import { GITHUB_REPO, formatDownloadCount, getTotalDownloadCount } from '~/utils/githubReleases'
+import { getLocale, getPath } from '~/utils/i18n'
+
+const locale = getLocale(Astro)
+const getLocalePath = getPath(locale)
+
+let downloadCountLabel: string | null = null
+try {
+  const totalDownloads = await getTotalDownloadCount()
+  downloadCountLabel = formatDownloadCount(totalDownloads)
+} catch {
+  downloadCountLabel = null
+}
+
+const footerColumns = [
+  {
+    title: 'Browser',
+    links: [
+      { label: 'Features', href: '/features' },
+      { label: 'Download', href: '/download' },
+      { label: 'Changelog', href: '/release-notes' },
+      { label: 'Roadmap', href: '/roadmap' },
+      { label: 'Compare', href: '/about' },
+    ],
+  },
+  {
+    title: 'Security',
+    links: [
+      { label: 'Privacy', href: '/privacy-policy' },
+      { label: 'Ad Blocking', href: '/ad-blocking' },
+      { label: 'Tracking Protection', href: '/tracking-protection' },
+      { label: 'Permissions', href: '/permissions' },
+    ],
+  },
+  {
+    title: 'Support',
+    links: [
+      { label: 'Report an Issue', href: 'https://github.com/Hrishikeshmind/astradesktop/issues/new/choose' },
+      { label: 'Community', href: '/community' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'About Astra', href: '/about' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Privacy Policy', href: '/privacy-policy' },
+      { label: 'Terms of Service', href: '/terms-of-service' },
+      { label: 'Cookie Policy', href: '/cookie-policy' },
+      { label: 'Licenses', href: '/licenses' },
+    ],
+  },
+]
+---
+
+<GridDivider />
+
+<footer id="footer" class="bg-paper" role="contentinfo" aria-label="Site footer">
+  <div class="container">
+    <!-- Main footer grid -->
+    <div class="grid lg:grid-cols-[1.4fr_repeat(5,1fr)]">
+      <!-- Brand column -->
+      <div class="grid-line grid-line-b grid-line-r px-0 py-10 lg:px-8 lg:py-12">
+        <a href={getLocalePath('/')} class="mb-6 flex items-center gap-2.5 no-underline">
+          <Logo class="size-7 text-dark" />
+          <span class="text-xs font-bold tracking-[0.12em] uppercase">Astra Browser</span>
+        </a>
+        <p class="mb-6 max-w-xs text-sm leading-relaxed text-gray">
+          A privacy-first browser made in India for a faster, safer and more focused web.
+        </p>
+        <div class="mb-8 max-w-xs">
+          <p class="text-xs leading-relaxed text-gray">
+            Built with <span aria-label="love">❤️</span> by Hrishikesh Gade
+          </p>
+        </div>
+        <p class="section-label mb-4">Follow us</p>
+        <SocialMediaStrip class="!opacity-100" />
+      </div>
+
+      <!-- Link columns -->
+      {
+        footerColumns.map((col, i) => (
+          <div
+            class:list={[
+              'grid-line grid-line-b px-5 py-8 lg:px-6 lg:py-12',
+              i < footerColumns.length - 1 && 'lg:grid-line-r',
+              i % 2 === 0 ? 'sm:grid-line-r' : '',
+            ]}
+          >
+            <h2 class="section-label mb-5">{col.title}</h2>
+            <nav aria-label={`${col.title} links`}>
+              <ul class="flex flex-col gap-2.5">
+                {col.links.map(link => (
+                  <li>
+                    <a
+                      class="footer-link"
+                      href={link.href.startsWith('http') ? link.href : getLocalePath(link.href)}
+                      {...(link.href.startsWith('http')
+                        ? { target: '_blank', rel: 'noopener noreferrer' }
+                        : {})}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="grid-line grid-line-t flex flex-col items-center justify-between gap-3 px-0 py-5 sm:flex-row lg:px-2">
+      <p class="tech-meta opacity-60">© 2026 Astra Browser. All rights reserved.</p>
+      <p
+        id="footer-download-count"
+        class:list={['tech-meta opacity-60', !downloadCountLabel && 'hidden']}
+      >
+        {downloadCountLabel ?? ''}
+      </p>
+      <p class="tech-meta flex items-center gap-2">
+        Made for India
+        <span aria-label="Indian flag">🇮🇳</span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script define:vars={{ githubRepo: GITHUB_REPO }}>
+  async function updateDownloadCount() {
+    const el = document.getElementById('footer-download-count')
+    if (!el) return
+
+    try {
+      let page = 1
+      let total = 0
+
+      while (true) {
+        const res = await fetch(
+          `https://api.github.com/repos/${githubRepo}/releases?per_page=100&page=${page}`,
+          {
+            headers: {
+              Accept: 'application/vnd.github+json',
+              'X-GitHub-Api-Version': '2022-11-28',
+            },
+          }
+        )
+        if (!res.ok) return
+
+        const releases = await res.json()
+        if (!Array.isArray(releases) || releases.length === 0) break
+
+        for (const release of releases) {
+          for (const asset of release.assets ?? []) {
+            total += asset.download_count ?? 0
+          }
+        }
+
+        if (releases.length < 100) break
+        page += 1
+      }
+
+      el.textContent = `${total.toLocaleString('en-US')} downloads`
+      el.classList.remove('hidden')
+    } catch {
+      // Keep build-time value when present.
+    }
+  }
+
+  updateDownloadCount()
+</script>
+
+<style>
+  @media (max-width: 1023px) {
+    footer .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    footer .grid > div:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 639px) {
+    footer .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

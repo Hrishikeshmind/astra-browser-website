@@ -1,0 +1,36 @@
+---
+const { class: className, ...props } = Astro.props
+
+import { icon, library } from '@fortawesome/fontawesome-svg-core'
+import { faDiscord, faGithub } from '@fortawesome/free-brands-svg-icons'
+import { cn } from '~/utils/merge'
+
+library.add(faGithub, faDiscord)
+const Github = icon({ prefix: 'fab', iconName: 'github' })
+const Discord = icon({ prefix: 'fab', iconName: 'discord' })
+---
+
+<ul class={cn('flex items-center gap-4 opacity-80', className)} {...props}>
+  <li>
+    <a
+      href="https://github.com/Hrishikeshmind/astradesktop"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="font-bold"
+      aria-label="Visit Astra Browser on GitHub"
+    >
+      <Fragment set:html={Github.html} />
+    </a>
+  </li>
+  <li>
+    <a
+      href="https://discord.gg/sGta4TnnB"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="font-bold"
+      aria-label="Join Astra Browser on Discord"
+    >
+      <Fragment set:html={Discord.html} />
+    </a>
+  </li>
+</ul>
