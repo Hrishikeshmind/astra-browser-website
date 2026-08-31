@@ -1,0 +1,104 @@
+<script is:inline data-cfasync="false">
+  const API_PATH = '/api/downloads'
+  const REFRESH_MS = 5000
+  const CLICK_GUARD_MS = 3000
+  const lastTrackedAt = new Map()
+
+  function formatCount(count) {
+    return `${count.toLocaleString('en-US')} downloads`
+  }
+
+  function updateDisplay(count) {
+    const el = document.getElementById('footer-download-count')
+    if (!el || typeof count !== 'number' || !Number.isFinite(count)) return
+    el.textContent = formatCount(count)
+    el.classList.remove('hidden')
+  }
+
+  function isGitHubInstallerLink(link) {
+    if (!(link instanceof HTMLAnchorElement) || !link.href) return false
+    try {
+      const url = new URL(link.href)
+      return (
+        url.hostname === 'github.com' &&
+        url.pathname.includes('/releases/') &&
+        url.pathname.includes('/download/')
+      )
+    } catch {
+      return false
+    }
+  }
+
+  async function fetchCount() {
+    const res = await fetch(API_PATH, { cache: 'no-store' })
+    if (!res.ok) return null
+    const data = await res.json()
+    return typeof data.count === 'number' ? data.count : null
+  }
+
+  async function reportDownload() {
+    const res = await fetch(API_PATH, {
+      method: 'POST',
+      cache: 'no-store',
+      keepalive: true,
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    return typeof data.count === 'number' ? data.count : null
+  }
+
+  async function refreshCount() {
+    try {
+      const count = await fetchCount()
+      if (count != null) updateDisplay(count)
+    } catch {
+      // Keep the last visible count.
+    }
+  }
+
+  function trackDownload(link) {
+    const key = link.href
+    const now = Date.now()
+    const last = lastTrackedAt.get(key) ?? 0
+    if (now - last < CLICK_GUARD_MS) return
+    lastTrackedAt.set(key, now)
+
+    reportDownload()
+      .then(count => {
+        if (count != null) updateDisplay(count)
+      })
+      .catch(() => refreshCount())
+
+    window.setTimeout(refreshCount, 1500)
+    window.setTimeout(refreshCount, 5000)
+  }
+
+  function bindDownloadTriggers() {
+    document.querySelectorAll('a[download], a.download-button').forEach(el => {
+      if (!(el instanceof HTMLAnchorElement)) return
+      if (!isGitHubInstallerLink(el)) return
+      if (el.dataset.downloadTrackBound === 'true') return
+      el.dataset.downloadTrackBound = 'true'
+
+      el.addEventListener(
+        'click',
+        () => {
+          trackDownload(el)
+        },
+        true
+      )
+    })
+  }
+
+  function start() {
+    bindDownloadTriggers()
+    refreshCount()
+    window.setInterval(refreshCount, REFRESH_MS)
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start)
+  } else {
+    start()
+  }
+</script>

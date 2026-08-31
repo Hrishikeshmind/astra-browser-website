@@ -1,6 +1,6 @@
 ---
+import DownloadCounter from '~/components/DownloadCounter.astro'
 import GridDivider from '~/components/GridDivider.astro'
-import GitHubDownloadCounter from '~/components/GitHubDownloadCounter.astro'
 import Logo from '~/components/Logo.astro'
 import SocialMediaStrip from '~/components/SocialMediaStrip.astro'
 import { formatDownloadCount, getTotalDownloadCount } from '~/utils/githubReleases'
@@ -137,7 +137,7 @@ const footerColumns = [
   </div>
 </footer>
 
-<GitHubDownloadCounter />
+<DownloadCounter />
 
 <style>
   @media (max-width: 1023px) {
