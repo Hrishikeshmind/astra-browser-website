@@ -147,7 +147,7 @@ import XmarkIcon from '~/icons/XmarkIcon.astro'
   .install-guide-root {
     position: fixed;
     inset: 0;
-    z-index: 100;
+    z-index: 99990;
     display: grid;
     place-items: center;
     padding: 1rem;
@@ -320,7 +320,8 @@ import XmarkIcon from '~/icons/XmarkIcon.astro'
     position: fixed;
     right: 1rem;
     bottom: 1rem;
-    z-index: 101;
+    left: auto;
+    z-index: 99999;
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
@@ -395,6 +396,13 @@ import XmarkIcon from '~/icons/XmarkIcon.astro'
 
     .install-guide-footer .btn-editorial {
       width: 100%;
+    }
+
+    .install-guide-toast {
+      right: 1rem;
+      left: 1rem;
+      width: auto;
+      max-width: none;
     }
   }
 

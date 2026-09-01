@@ -346,3 +346,25 @@
 .reveal-on-scroll.is-visible {
   animation: fadeIn 0.5s ease-out forwards;
 }
+
+.install-guide-root {
+  z-index: 99990;
+}
+
+.install-guide-root.is-open .install-guide-panel {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.install-guide-root.is-open .install-guide-backdrop {
+  opacity: 1 !important;
+}
+
+.install-guide-toast {
+  z-index: 99999;
+}
+
+.install-guide-toast.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
