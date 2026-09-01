@@ -1,0 +1,129 @@
+<script is:inline data-cfasync="false">
+  ;(function () {
+    const INSTALLER_PATTERN = /astra\.installer(-arm64)?\.exe/i
+    const GITHUB_EXE_PATTERN = /github\.com\/.*\/releases\/.*\/download\/.*\.exe/i
+
+    let toastTimer
+
+    function isWindowsInstallerLink(link) {
+      if (!(link instanceof HTMLAnchorElement) || !link.href) return false
+
+      try {
+        const url = new URL(link.href)
+        const filename = url.pathname.split('/').pop() || ''
+        return INSTALLER_PATTERN.test(filename) || GITHUB_EXE_PATTERN.test(link.href)
+      } catch {
+        return INSTALLER_PATTERN.test(link.href) || GITHUB_EXE_PATTERN.test(link.href)
+      }
+    }
+
+    function getElements() {
+      return {
+        root: document.getElementById('install-guide-root'),
+        panel: document.getElementById('install-guide-panel'),
+        toast: document.getElementById('install-guide-toast'),
+      }
+    }
+
+    function triggerDownload(url) {
+      const anchor = document.createElement('a')
+      anchor.href = url
+      anchor.rel = 'noopener noreferrer'
+      anchor.target = '_self'
+      document.body.appendChild(anchor)
+      anchor.click()
+      anchor.remove()
+    }
+
+    function showToast() {
+      const { toast } = getElements()
+      if (!toast) return
+
+      toast.hidden = false
+      toast.classList.add('is-visible')
+
+      window.clearTimeout(toastTimer)
+      toastTimer = window.setTimeout(hideToast, 20000)
+    }
+
+    function hideToast() {
+      const { toast } = getElements()
+      if (!toast) return
+
+      toast.classList.remove('is-visible')
+      window.setTimeout(function () {
+        toast.hidden = true
+      }, 250)
+    }
+
+    function openInstallGuide(downloadUrl) {
+      const { root, panel } = getElements()
+      if (!root || !panel) {
+        triggerDownload(downloadUrl)
+        return
+      }
+
+      root.hidden = false
+      root.setAttribute('aria-hidden', 'false')
+      document.body.style.overflow = 'hidden'
+
+      window.requestAnimationFrame(function () {
+        root.classList.add('is-open')
+        panel.focus()
+      })
+
+      triggerDownload(downloadUrl)
+      showToast()
+    }
+
+    function closeInstallGuide() {
+      const { root } = getElements()
+      if (!root) return
+
+      root.classList.remove('is-open')
+      root.setAttribute('aria-hidden', 'true')
+      document.body.style.overflow = ''
+
+      window.setTimeout(function () {
+        root.hidden = true
+      }, 250)
+    }
+
+    function handleDownloadClick(event) {
+      const target = event.target
+      if (!(target instanceof Element)) return
+
+      const link = target.closest('a[href]')
+      if (!(link instanceof HTMLAnchorElement)) return
+      if (!isWindowsInstallerLink(link)) return
+
+      event.preventDefault()
+      event.stopPropagation()
+      openInstallGuide(link.href)
+    }
+
+    function bindInstallGuide() {
+      const { root } = getElements()
+      if (!root) return
+
+      document.addEventListener('click', handleDownloadClick, true)
+
+      document.getElementById('install-guide-close')?.addEventListener('click', closeInstallGuide)
+      document.getElementById('install-guide-continue')?.addEventListener('click', closeInstallGuide)
+      document.getElementById('install-guide-backdrop')?.addEventListener('click', closeInstallGuide)
+      document.getElementById('install-guide-toast-close')?.addEventListener('click', hideToast)
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && root.classList.contains('is-open')) {
+          closeInstallGuide()
+        }
+      })
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindInstallGuide)
+    } else {
+      bindInstallGuide()
+    }
+  })()
+</script>
