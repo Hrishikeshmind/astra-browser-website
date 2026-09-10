@@ -10,5 +10,14 @@
       "Built for speed, security, and everyday browsing"
     ],
     "fixes": []
+  },
+  {
+    "version": "1.19.12",
+    "date": "10/09/2026",
+    "features": [],
+    "fixes": [
+      "Compact Mode now collapses the top toolbar together with the sidebar when the AI Sidebar is open (previously only the sidebar tucked in)",
+      "Hovering away from the sidebar after opening the AI Sidebar now correctly re-collapses the toolbar again"
+    ]
   }
 ]
